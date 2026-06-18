@@ -2431,17 +2431,17 @@ function openPrediction(groupId, home, away, date, time, round, stadium) {
       document.querySelector('.btn-submit').style.cursor = 'not-allowed';
     }
   } else {
-    // 未开始比赛 - 显示预测内容
+    // 未开始比赛 - 显示预测内容（移除用户比分预测输入）
     document.getElementById('reliablePrediction').style.display = 'block';
     document.getElementById('liveAnalysis').style.display = 'block';
-    document.querySelector('.prediction-section').style.display = 'block';
+    document.querySelector('.prediction-section').style.display = 'none';
     document.querySelector('.prob-section').style.display = 'block';
     document.getElementById('aiAnalysis').style.display = 'block';
-    document.querySelector('.btn-submit').textContent = '确认预测';
+    document.querySelector('.btn-submit').textContent = '关闭';
     document.querySelector('.btn-submit').disabled = false;
     document.querySelector('.btn-submit').style.opacity = '1';
     document.querySelector('.btn-submit').style.cursor = 'pointer';
-    document.querySelector('.btn-submit').onclick = submitPrediction;
+    document.querySelector('.btn-submit').onclick = closeModal;
 
     generateReliablePrediction(home, away);
     generateLiveAnalysis(home, away, groupId);
