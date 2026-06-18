@@ -2732,6 +2732,10 @@ function showDailySchedule(date) {
 // ==================== SYSTEM PREDICTIONS ====================
 function renderSystemPredictions() {
   renderDailySchedule();
+  filterPredictionCardsByDate('all');
+}
+
+function filterPredictionCardsByDate(date) {
   const container = document.getElementById('predictionHistory');
   const allKeys = Object.keys(systemPredictions);
 
@@ -2746,9 +2750,23 @@ function renderSystemPredictions() {
     return;
   }
 
+  // Filter keys by date if not 'all'
+  let filteredKeys = allKeys;
+  if (date !== 'all') {
+    filteredKeys = allKeys.filter(k => {
+      const parts = k.split('-');
+      const groupId = parts[0];
+      const home = parts[1];
+      const away = parts[2];
+      const group = groups.find(g => g.id === groupId);
+      const match = group ? group.matches.find(m => m.home === home && m.away === away) : null;
+      return match && match.date === date;
+    });
+  }
+
   // Separate finished and upcoming
-  const finishedKeys = allKeys.filter(k => systemPredictions[k].postMatch);
-  const upcomingKeys = allKeys.filter(k => !systemPredictions[k].postMatch);
+  const finishedKeys = filteredKeys.filter(k => systemPredictions[k].postMatch);
+  const upcomingKeys = filteredKeys.filter(k => !systemPredictions[k].postMatch);
 
   let html = '';
 
@@ -2765,7 +2783,6 @@ function renderSystemPredictions() {
       const awayFlag = getEmblemSVG(away);
       const pm = sp.preMatch;
 
-      // Find match date/time from groups data
       const group = groups.find(g => g.id === groupId);
       const match = group ? group.matches.find(m => m.home === home && m.away === away) : null;
       const dateStr = match ? `${match.date} ${match.time}` : '';
@@ -2844,11 +2861,15 @@ function renderSystemPredictions() {
           </div>
           <div class="sys-pred-card-footer">
             ${outcomeIcon}
-            <span class="sys-pred-click-hint">&#x1F4A1; 点击查看详细分析</span>
+            <span class="sys-pred-click-hint">&#x1F4A1; 点击查看复盘</span>
           </div>
         </div>
       `;
     });
+  }
+
+  if (filteredKeys.length === 0) {
+    html = '<div style="text-align:center;color:var(--muted);padding:2rem;">该日期暂无预测比赛</div>';
   }
 
   container.innerHTML = html;
@@ -3013,9 +3034,36 @@ function viewSystemPredictionDetail(key) {
     `;
   }
 
-  // Replace modal body content
+  // Replace modal body content while preserving structure
   const modalBody = document.querySelector('.modal-body');
-  modalBody.innerHTML = modalBodyHTML + '<button class="btn-submit" onclick="closeModal()">关闭</button>';
+  // Create a temporary container
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = modalBodyHTML;
+
+  // Replace all children except the button
+  const btn = modalBody.querySelector('.btn-submit');
+  modalBody.innerHTML = '';
+
+  // Append new content
+  while (tempDiv.firstChild) {
+    modalBody.appendChild(tempDiv.firstChild);
+  }
+
+  // Add or update button
+  if (btn) {
+    modalBody.appendChild(btn);
+    btn.textContent = '关闭';
+    btn.onclick = closeModal;
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  } else {
+    const newBtn = document.createElement('button');
+    newBtn.className = 'btn-submit';
+    newBtn.textContent = '关闭';
+    newBtn.onclick = closeModal;
+    modalBody.appendChild(newBtn);
+  }
 
   document.getElementById('modalOverlay').classList.add('show');
   document.body.style.overflow = 'hidden';
