@@ -2937,7 +2937,7 @@ function viewSystemPredictionDetail(key) {
   const post = sp.postMatch;
   const isFinished = !!post;
 
-  // Goal prediction
+  // Goal prediction (calculate values but don't set DOM yet - elements may not exist)
   const homeAttack = teamStrength[home] * 0.6 + Math.random() * 5;
   const awayAttack = teamStrength[away] * 0.6 + Math.random() * 5;
   const homeDefense = (100 - teamStrength[home]) * 0.4;
@@ -2945,11 +2945,9 @@ function viewSystemPredictionDetail(key) {
   const expectedHomeGoals = Math.max(0.5, (homeAttack - awayDefense) / 20).toFixed(1);
   const expectedAwayGoals = Math.max(0.5, (awayAttack - homeDefense) / 20).toFixed(1);
   const totalGoals = (parseFloat(expectedHomeGoals) + parseFloat(expectedAwayGoals)).toFixed(1);
-
-  document.getElementById('predTotalGoals').textContent = totalGoals;
-  document.getElementById('predOverUnder').textContent = parseFloat(totalGoals) > 2.5 ? '大2.5' : '小2.5';
-  document.getElementById('predOverUnder').style.color = parseFloat(totalGoals) > 2.5 ? 'var(--accent2)' : 'var(--red)';
-  document.getElementById('predBothScore').textContent = (parseFloat(expectedHomeGoals) > 0.5 && parseFloat(expectedAwayGoals) > 0.5) ? '是' : '否';
+  const overUnderText = parseFloat(totalGoals) > 2.5 ? '大2.5' : '小2.5';
+  const overUnderColor = parseFloat(totalGoals) > 2.5 ? 'var(--accent2)' : 'var(--red)';
+  const bothScoreText = (parseFloat(expectedHomeGoals) > 0.5 && parseFloat(expectedAwayGoals) > 0.5) ? '是' : '否';
 
   let modalBodyHTML = '';
 
@@ -3025,15 +3023,15 @@ function viewSystemPredictionDetail(key) {
         <div style="font-size:0.85rem;font-weight:700;color:var(--muted);margin-bottom:0.5rem;">🎯 进球数预测</div>
         <div style="display:flex;gap:1rem;flex-wrap:wrap;">
           <div style="flex:1;min-width:120px;background:rgba(255,255,255,0.05);padding:0.75rem;border-radius:12px;text-align:center;">
-            <div style="font-size:1.5rem;font-weight:900;color:var(--accent);" id="predTotalGoals">2.5</div>
+            <div style="font-size:1.5rem;font-weight:900;color:var(--accent);">${totalGoals}</div>
             <div style="font-size:0.75rem;color:var(--muted);margin-top:0.25rem;">预计总进球</div>
           </div>
           <div style="flex:1;min-width:120px;background:rgba(255,255,255,0.05);padding:0.75rem;border-radius:12px;text-align:center;">
-            <div style="font-size:1.5rem;font-weight:900;color:var(--blue);" id="predOverUnder">大2.5</div>
+            <div style="font-size:1.5rem;font-weight:900;color:${overUnderColor};">${overUnderText}</div>
             <div style="font-size:0.75rem;color:var(--muted);margin-top:0.25rem;">大小球</div>
           </div>
           <div style="flex:1;min-width:120px;background:rgba(255,255,255,0.05);padding:0.75rem;border-radius:12px;text-align:center;">
-            <div style="font-size:1.5rem;font-weight:900;color:var(--accent2);" id="predBothScore">是</div>
+            <div style="font-size:1.5rem;font-weight:900;color:var(--accent2);">${bothScoreText}</div>
             <div style="font-size:0.75rem;color:var(--muted);margin-top:0.25rem;">双方进球</div>
           </div>
         </div>
