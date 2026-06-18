@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026 FIFA世界杯 比分预测系统</title>
+<title>2026 FIFA世界杯 比分预测</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
 
@@ -1331,7 +1331,7 @@ body {
 <nav class="nav-bar">
   <div class="nav-tab active" data-tab="schedule">赛程</div>
   <div class="nav-tab" data-tab="standings">积分榜</div>
-  <div class="nav-tab" data-tab="predictions">系统预测</div>
+  <div class="nav-tab" data-tab="predictions">预测</div>
 </nav>
 
 <!-- Main Content -->
@@ -1354,7 +1354,7 @@ body {
 
   <!-- System Predictions Section -->
   <div class="section" id="section-predictions">
-    <h2 class="section-title">系统预测</h2>
+    <h2 class="section-title">预测</h2>
     <p class="section-desc">AI赛前预测 vs 真实结果对比分析</p>
     <div class="daily-schedule" id="dailySchedule">
       <h3 style="font-size:1.1rem;font-weight:900;margin-bottom:0.8rem;color:var(--accent);">📅 每日赛程</h3>
@@ -2400,7 +2400,24 @@ function openPrediction(groupId, home, away, date, time, round, stadium) {
           </div>
         </div>
       `;
-      document.querySelector('.modal-body').innerHTML = finishedHTML + '<button class="btn-submit" onclick="closeModal()">关闭</button>';
+      // Safely update modal body without destroying structure
+      const modalBody = document.querySelector('.modal-body');
+      const btn = modalBody.querySelector('.btn-submit');
+      modalBody.innerHTML = finishedHTML;
+      if (btn) {
+        modalBody.appendChild(btn);
+        btn.textContent = '关闭';
+        btn.onclick = closeModal;
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+      } else {
+        const newBtn = document.createElement('button');
+        newBtn.className = 'btn-submit';
+        newBtn.textContent = '关闭';
+        newBtn.onclick = closeModal;
+        modalBody.appendChild(newBtn);
+      }
     } else {
       document.getElementById('reliablePrediction').style.display = 'none';
       document.getElementById('liveAnalysis').style.display = 'none';
@@ -2743,7 +2760,7 @@ function filterPredictionCardsByDate(date) {
     container.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">&#x1F3AF;</div>
-        <div class="empty-text">暂无系统预测记录</div>
+        <div class="empty-text">暂无预测记录</div>
         <div class="empty-sub">比赛结束后将展示赛前预测与真实结果对比</div>
       </div>
     `;
@@ -2816,8 +2833,8 @@ function filterPredictionCardsByDate(date) {
     });
   }
 
-  // ====== Finished predictions ======
-  if (finishedKeys.length > 0) {
+  // ====== Finished predictions (only show when date === 'all') ======
+  if (date === 'all' && finishedKeys.length > 0) {
     html += `<h3 style="font-size:1.1rem;font-weight:900;margin:1.5rem 0 1rem;color:var(--accent2);">&#x2705; 已完赛复盘（${finishedKeys.length}场）</h3>`;
     finishedKeys.forEach(key => {
       const sp = systemPredictions[key];
@@ -2842,7 +2859,7 @@ function filterPredictionCardsByDate(date) {
       html += `
         <div class="sys-pred-card fade-in-up" onclick="viewSystemPredictionDetail('${key}')" style="cursor:pointer;">
           <div class="sys-pred-header">
-            <span class="sys-pred-tag">系统预测分析</span>
+            <span class="sys-pred-tag">预测分析</span>
             <span class="sys-pred-group">${groupId}组</span>
           </div>
           <div class="sys-pred-teams">
@@ -2868,8 +2885,8 @@ function filterPredictionCardsByDate(date) {
     });
   }
 
-  if (filteredKeys.length === 0) {
-    html = '<div style="text-align:center;color:var(--muted);padding:2rem;">该日期暂无预测比赛</div>';
+  if (filteredKeys.length === 0 || (date !== 'all' && upcomingKeys.length === 0)) {
+    html = '<div style="text-align:center;color:var(--muted);padding:2rem;">该日期暂无赛前预测</div>';
   }
 
   container.innerHTML = html;
@@ -2895,7 +2912,7 @@ function viewSystemPredictionDetail(key) {
   };
 
   const group = groups.find(g => g.id === groupId);
-  document.getElementById('modalRound').textContent = `${group ? group.name : groupId}组 · 系统预测分析`;
+  document.getElementById('modalRound').textContent = `${group ? group.name : groupId}组 · 预测分析`;
   document.getElementById('modalHomeFlag').innerHTML = getEmblemSVG(home, 48);
   document.getElementById('modalAwayFlag').innerHTML = getEmblemSVG(away, 48);
   document.getElementById('modalHomeName').textContent = home;
@@ -2972,7 +2989,7 @@ function viewSystemPredictionDetail(key) {
     // Upcoming match - only show preMatch analysis
     modalBodyHTML = `
       <div class="reliable-prediction" id="reliablePrediction">
-        <div class="reliable-title">&#x1F3AE; 赛前系统预测</div>
+        <div class="reliable-title">&#x1F3AE; 赛前预测</div>
         <div class="reliable-grid" style="grid-template-columns:1fr 1fr 1fr;">
           <div class="reliable-item">
             <div class="label">最可能比分</div>
