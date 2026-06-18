@@ -2428,21 +2428,39 @@ function openPrediction(groupId, home, away, date, time, round, stadium) {
       document.querySelector('.btn-submit').style.cursor = 'not-allowed';
     }
   } else {
+    // 未开始比赛 - 显示预测内容
     document.getElementById('reliablePrediction').style.display = 'block';
     document.getElementById('liveAnalysis').style.display = 'block';
-    document.querySelector('.prediction-section').style.display = 'none';
+    document.querySelector('.prediction-section').style.display = 'block';
     document.querySelector('.prob-section').style.display = 'block';
     document.getElementById('aiAnalysis').style.display = 'block';
-    document.querySelector('.btn-submit').textContent = '关闭';
+    document.querySelector('.btn-submit').textContent = '确认预测';
     document.querySelector('.btn-submit').disabled = false;
     document.querySelector('.btn-submit').style.opacity = '1';
     document.querySelector('.btn-submit').style.cursor = 'pointer';
-    document.querySelector('.btn-submit').onclick = closeModal;
+    document.querySelector('.btn-submit').onclick = submitPrediction;
 
     generateReliablePrediction(home, away);
     generateLiveAnalysis(home, away, groupId);
     updateProbabilities();
     generateAnalysis(home, away);
+
+    // 添加进球数预测
+    const homeAttack = teamStrength[home] * 0.6 + Math.random() * 5;
+    const awayAttack = teamStrength[away] * 0.6 + Math.random() * 5;
+    const homeDefense = (100 - teamStrength[home]) * 0.4;
+    const awayDefense = (100 - teamStrength[away]) * 0.4;
+    const expectedHomeGoals = Math.max(0.5, (homeAttack - awayDefense) / 20).toFixed(1);
+    const expectedAwayGoals = Math.max(0.5, (awayAttack - homeDefense) / 20).toFixed(1);
+    const totalGoals = (parseFloat(expectedHomeGoals) + parseFloat(expectedAwayGoals)).toFixed(1);
+
+    const goalPredEl = document.getElementById('goalPrediction');
+    if (goalPredEl) {
+      document.getElementById('predTotalGoals').textContent = totalGoals;
+      document.getElementById('predOverUnder').textContent = parseFloat(totalGoals) > 2.5 ? '大2.5' : '小2.5';
+      document.getElementById('predOverUnder').style.color = parseFloat(totalGoals) > 2.5 ? 'var(--accent2)' : 'var(--red)';
+      document.getElementById('predBothScore').textContent = (parseFloat(expectedHomeGoals) > 0.5 && parseFloat(expectedAwayGoals) > 0.5) ? '是' : '否';
+    }
   }
 
   document.getElementById('modalOverlay').classList.add('show');
