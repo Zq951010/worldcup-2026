@@ -1556,10 +1556,10 @@ const matchResults = {
   'J-阿根廷-阿尔及利亚': { finished: true, score: '3-0', homeGoals: 3, awayGoals: 0 },
   'J-奥地利-约旦': { finished: true, score: '3-1', homeGoals: 3, awayGoals: 1 },
   'K-葡萄牙-刚果(金)': { finished: true, score: '1-1', homeGoals: 1, awayGoals: 1 },
-  'K-乌兹别克斯坦-哥伦比亚': { finished: true, score: '0-3', homeGoals: 0, awayGoals: 3 },
+  'K-乌兹别克斯坦-哥伦比亚': { finished: true, score: '1-3', homeGoals: 1, awayGoals: 3 },
   'L-英格兰-克罗地亚': { finished: true, score: '4-2', homeGoals: 4, awayGoals: 2 },
   'L-加纳-巴拿马': { finished: true, score: '1-0', homeGoals: 1, awayGoals: 0 },
-  'L-巴拿马-克罗地亚': { finished: true, score: '0-2', homeGoals: 0, awayGoals: 2 }
+  'L-巴拿马-克罗地亚': { finished: false, score: '0-0', homeGoals: 0, awayGoals: 0 },
 };
 
 // 系统预测数据模型
@@ -1929,19 +1929,21 @@ const systemPredictions = {
       analysis: '哥伦比亚实力占优，但乌兹别克斯坦首秀主场氛围加成。'
     },
     postMatch: {
-      actualScore: '0-3',
-      homeGoals: [],
+      actualScore: '1-3',
+      homeGoals: [
+        {player:'法伊祖拉耶夫', minute:'60\'', assist:'哈姆达莫夫'}
+      ],
       awayGoals: [
-        {player:'路易斯·迪亚斯', minute:'15\'', assist:''},
-        {player:'J罗', minute:'34\'', assist:''},
-        {player:'科尔多瓦', minute:'78\'', assist:''}
+        {player:'穆尼奥斯', minute:'41\'', assist:'路易斯·迪亚斯'},
+        {player:'路易斯·迪亚斯', minute:'66\'', assist:'普埃尔塔'},
+        {player:'坎帕斯', minute:'90+9\'', assist:'库乔'}
       ],
       check: {
         scoreHit: false,
         outcomeHit: true,
-        scoreTier: '模型三档未命中,实际0-3',
+        scoreTier: '模型三档未命中,实际1-3',
         outcomeComment: '胜负:概率偏哥伦比亚50%,实际客胜,方向命中',
-        recap: '复盘:哥伦比亚完全掌控比赛,路易斯·迪亚斯、J罗、科尔多瓦各入一球。乌兹别克斯坦世界杯首秀被零封,实力差距明显',
+        recap: '复盘:哥伦比亚3-1击败乌兹别克斯坦，穆尼奥斯首开纪录，法伊祖拉耶夫扳平，迪亚斯传射建功，坎帕斯补时锁定胜局。乌兹别克斯坦打入队史世界杯首球',
         summary: '南美劲旅展现实力——哥伦比亚用一场完胜开启世界杯征程'
       }
     }
@@ -1987,22 +1989,6 @@ const systemPredictions = {
       homeWin: 22, draw: 30, awayWin: 48,
       mostLikelyScores: ['0-1', '1-2', '1-1'],
       analysis: '克罗地亚首战虽败但实力占优，巴拿马首战负加纳。克罗地亚为出线必须拿下。'
-    },
-    postMatch: {
-      actualScore: '0-2',
-      homeGoals: [],
-      awayGoals: [
-        {player:'克拉马里奇', minute:'23\'', assist:''},
-        {player:'佩里西奇', minute:'67\'', assist:''}
-      ],
-      check: {
-        scoreHit: false,
-        outcomeHit: true,
-        scoreTier: '模型三档第一档0-1未命中,实际0-2',
-        outcomeComment: '胜负:概率偏克罗地亚48%,实际客胜,方向命中',
-        recap: '复盘:克罗地亚全场控制节奏,克拉马里奇、佩里西奇各入一球。巴拿马两连败出线形势严峻',
-        summary: '老兵不死——克罗地亚用胜利证明自己仍有竞争力'
-      }
     }
   }
 };
@@ -2070,10 +2056,10 @@ const standingsData = {
     { team: '约旦', played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 3, gd: -2, pts: 0 }
   ],
   'K': [
-    { team: '哥伦比亚', played: 1, won: 1, drawn: 0, lost: 0, gf: 3, ga: 0, gd: 3, pts: 3 },
+    { team: '哥伦比亚', played: 1, won: 1, drawn: 0, lost: 0, gf: 3, ga: 1, gd: 2, pts: 3 },
     { team: '葡萄牙', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
     { team: '刚果(金)', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '乌兹别克斯坦', played: 1, won: 0, drawn: 0, lost: 1, gf: 0, ga: 3, gd: -3, pts: 0 }
+    { team: '乌兹别克斯坦', played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 3, gd: -2, pts: 0 }
   ],
   'L': [
     { team: '英格兰', played: 1, won: 1, drawn: 0, lost: 0, gf: 4, ga: 2, gd: 2, pts: 3 },
