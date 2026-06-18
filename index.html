@@ -2175,8 +2175,8 @@ const groups = [
       {home:'加纳',away:'巴拿马',date:'6月18日',time:'07:00',round:'第1轮',stadium:'AT&T体育场, 阿灵顿'},
       {home:'英格兰',away:'加纳',date:'6月24日',time:'04:00',round:'第2轮',stadium:'大都会人寿体育场, 新泽西'},
       {home:'巴拿马',away:'克罗地亚',date:'6月24日',time:'07:00',round:'第2轮',stadium:'AT&T体育场, 阿灵顿'},
-      {home:'克罗地亚',away:'英格兰',date:'6月29日',time:'02:00',round:'第3轮',stadium:'大都会人寿体育场, 新泽西'},
-      {home:'巴拿马',away:'加纳',date:'6月29日',time:'02:00',round:'第3轮',stadium:'AT&T体育场, 阿灵顿'}
+      {home:'巴拿马',away:'英格兰',date:'6月28日',time:'05:00',round:'第3轮',stadium:'大都会人寿体育场, 新泽西'},
+      {home:'克罗地亚',away:'加纳',date:'6月28日',time:'05:00',round:'第3轮',stadium:'AT&T体育场, 阿灵顿'}
     ]}
 ];
 
@@ -2754,140 +2754,155 @@ function renderSystemPredictions() {
 
 function filterPredictionCardsByDate(date) {
   const container = document.getElementById('predictionHistory');
-  const allKeys = Object.keys(systemPredictions);
 
-  if (allKeys.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">&#x1F3AF;</div>
-        <div class="empty-text">暂无预测记录</div>
-        <div class="empty-sub">比赛结束后将展示赛前预测与真实结果对比</div>
-      </div>
-    `;
+  // Get all matches for the selected date
+  let allMatches = [];
+  groups.forEach(g => {
+    g.matches.forEach(m => {
+      if (date === 'all' || m.date === date) {
+        allMatches.push({ ...m, groupId: g.id });
+      }
+    });
+  });
+
+  // Sort by date and time
+  const dateOrder = {};
+  const allDates = [...new Set(allMatches.map(m => m.date))].sort((a, b) => {
+    const da = parseInt(a.replace('6月', '').replace('日', ''));
+    const db = parseInt(b.replace('6月', '').replace('日', ''));
+    return da - db;
+  });
+  allDates.forEach((d, i) => dateOrder[d] = i);
+  allMatches.sort((a, b) => {
+    if (dateOrder[a.date] !== dateOrder[b.date]) return dateOrder[a.date] - dateOrder[b.date];
+    return a.time.localeCompare(b.time);
+  });
+
+  if (allMatches.length === 0) {
+    container.innerHTML = '<div style="text-align:center;color:var(--muted);padding:2rem;">该日期暂无比赛</div>';
     return;
   }
 
-  // Filter keys by date if not 'all'
-  let filteredKeys = allKeys;
-  if (date !== 'all') {
-    filteredKeys = allKeys.filter(k => {
-      const parts = k.split('-');
-      const groupId = parts[0];
-      const home = parts[1];
-      const away = parts[2];
-      const group = groups.find(g => g.id === groupId);
-      const match = group ? group.matches.find(m => m.home === home && m.away === away) : null;
-      return match && match.date === date;
-    });
-  }
-
-  // Separate finished and upcoming
-  const finishedKeys = filteredKeys.filter(k => systemPredictions[k].postMatch);
-  const upcomingKeys = filteredKeys.filter(k => !systemPredictions[k].postMatch);
-
   let html = '';
+  let lastDate = '';
 
-  // ====== Upcoming predictions first ======
-  if (upcomingKeys.length > 0) {
-    html += `<h3 style="font-size:1.1rem;font-weight:900;margin-bottom:1rem;color:var(--blue);">&#x1F3AE; 赛前预测（${upcomingKeys.length}场）</h3>`;
-    upcomingKeys.forEach(key => {
-      const sp = systemPredictions[key];
-      const parts = key.split('-');
-      const groupId = parts[0];
-      const home = parts[1];
-      const away = parts[2];
-      const homeFlag = getEmblemSVG(home);
-      const awayFlag = getEmblemSVG(away);
-      const pm = sp.preMatch;
+  allMatches.forEach(m => {
+    if (date === 'all' && m.date !== lastDate) {
+      html += `<div style="font-size:0.9rem;font-weight:900;color:var(--accent);margin:0.8rem 0 0.4rem;padding-left:0.5rem;">${m.date}</div>`;
+      lastDate = m.date;
+    }
 
-      const group = groups.find(g => g.id === groupId);
-      const match = group ? group.matches.find(m => m.home === home && m.away === away) : null;
-      const dateStr = match ? `${match.date} ${match.time}` : '';
+    const resultKey = `${m.groupId}-${m.home}-${m.away}`;
+    const result = matchResults[resultKey];
+    const isFinished = result && result.finished;
+    const homeFlag = getEmblemSVG(m.home, 20);
+    const awayFlag = getEmblemSVG(m.away, 20);
 
+    // Check if we have system prediction for this match
+    const sysPred = systemPredictions[resultKey];
+
+    if (sysPred) {
+      // Show detailed prediction card
+      const pm = sysPred.preMatch;
+      const post = sysPred.postMatch;
+
+      if (post) {
+        // Finished match
+        const check = post.check;
+        let outcomeIcon = '';
+        if (check.scoreHit) {
+          outcomeIcon = '<span class="sys-pred-result-icon hit">&#x2714; 比分命中</span>';
+        } else if (check.outcomeHit) {
+          outcomeIcon = '<span class="sys-pred-result-icon partial">+ 方向命中</span>';
+        } else {
+          outcomeIcon = '<span class="sys-pred-result-icon miss">&#x2718; 未命中</span>';
+        }
+
+        html += `
+          <div class="sys-pred-card fade-in-up" onclick="viewSystemPredictionDetail('${resultKey}')" style="cursor:pointer;">
+            <div class="sys-pred-header">
+              <span class="sys-pred-tag">预测分析</span>
+              <span class="sys-pred-group">${m.groupId}组</span>
+            </div>
+            <div class="sys-pred-teams">
+              <div class="sys-pred-team">
+                <div class="sys-pred-flag">${homeFlag}</div>
+                <div class="sys-pred-name">${m.home}</div>
+              </div>
+              <div class="sys-pred-vs">
+                <div class="sys-pred-score">${post.actualScore}</div>
+                <div class="sys-pred-score-label">最终比分</div>
+              </div>
+              <div class="sys-pred-team">
+                <div class="sys-pred-flag">${awayFlag}</div>
+                <div class="sys-pred-name">${m.away}</div>
+              </div>
+            </div>
+            <div class="sys-pred-card-footer">
+              ${outcomeIcon}
+              <span class="sys-pred-click-hint">&#x1F4A1; 点击查看复盘</span>
+            </div>
+          </div>
+        `;
+      } else {
+        // Upcoming match with prediction
+        html += `
+          <div class="sys-pred-card fade-in-up upcoming" onclick="viewSystemPredictionDetail('${resultKey}')" style="cursor:pointer;">
+            <div class="sys-pred-header">
+              <span class="sys-pred-tag" style="background:rgba(100,181,246,0.15);color:var(--blue);">赛前预测</span>
+              <span class="sys-pred-group">${m.groupId}组</span>
+            </div>
+            <div class="sys-pred-teams">
+              <div class="sys-pred-team">
+                <div class="sys-pred-flag">${homeFlag}</div>
+                <div class="sys-pred-name">${m.home}</div>
+              </div>
+              <div class="sys-pred-vs">
+                <div class="sys-pred-score" style="font-size:1rem;color:var(--muted);">VS</div>
+                <div class="sys-pred-score-label">${m.date} ${m.time}</div>
+              </div>
+              <div class="sys-pred-team">
+                <div class="sys-pred-flag">${awayFlag}</div>
+                <div class="sys-pred-name">${m.away}</div>
+              </div>
+            </div>
+            <div class="sys-pred-card-footer">
+              <span class="sys-pred-result-icon" style="background:rgba(100,181,246,0.1);color:var(--blue);">&#x1F4CA; ${pm.homeWin}%胜 / ${pm.draw}%平 / ${pm.awayWin}%负</span>
+              <span class="sys-pred-click-hint">&#x1F4A1; 点击查看详细分析</span>
+            </div>
+          </div>
+        `;
+      }
+    } else {
+      // No system prediction - show simple card
       html += `
-        <div class="sys-pred-card fade-in-up upcoming" onclick="viewSystemPredictionDetail('${key}')" style="cursor:pointer;">
+        <div class="sys-pred-card fade-in-up" onclick="openPrediction('${m.groupId}','${m.home}','${m.away}','${m.date}','${m.time}','${m.round}','${m.stadium.replace(/'/g, "\\'")}')" style="cursor:pointer;">
           <div class="sys-pred-header">
-            <span class="sys-pred-tag" style="background:rgba(100,181,246,0.15);color:var(--blue);">赛前预测</span>
-            <span class="sys-pred-group">${groupId}组</span>
+            <span class="sys-pred-tag" style="background:rgba(255,255,255,0.1);color:var(--muted);">暂无预测</span>
+            <span class="sys-pred-group">${m.groupId}组</span>
           </div>
           <div class="sys-pred-teams">
             <div class="sys-pred-team">
               <div class="sys-pred-flag">${homeFlag}</div>
-              <div class="sys-pred-name">${home}</div>
+              <div class="sys-pred-name">${m.home}</div>
             </div>
             <div class="sys-pred-vs">
               <div class="sys-pred-score" style="font-size:1rem;color:var(--muted);">VS</div>
-              <div class="sys-pred-score-label">${dateStr}</div>
+              <div class="sys-pred-score-label">${m.date} ${m.time}</div>
             </div>
             <div class="sys-pred-team">
               <div class="sys-pred-flag">${awayFlag}</div>
-              <div class="sys-pred-name">${away}</div>
+              <div class="sys-pred-name">${m.away}</div>
             </div>
           </div>
           <div class="sys-pred-card-footer">
-            <span class="sys-pred-result-icon" style="background:rgba(100,181,246,0.1);color:var(--blue);">&#x1F4CA; ${pm.homeWin}%胜 / ${pm.draw}%平 / ${pm.awayWin}%负</span>
-            <span class="sys-pred-click-hint">&#x1F4A1; 点击查看详细分析</span>
+            <span class="sys-pred-result-icon" style="background:rgba(255,255,255,0.05);color:var(--muted);">点击生成实时预测</span>
+            <span class="sys-pred-click-hint">&#x1F4A1; 点击查看分析</span>
           </div>
         </div>
       `;
-    });
-  }
-
-  // ====== Finished predictions (only show when date === 'all') ======
-  if (date === 'all' && finishedKeys.length > 0) {
-    html += `<h3 style="font-size:1.1rem;font-weight:900;margin:1.5rem 0 1rem;color:var(--accent2);">&#x2705; 已完赛复盘（${finishedKeys.length}场）</h3>`;
-    finishedKeys.forEach(key => {
-      const sp = systemPredictions[key];
-      const parts = key.split('-');
-      const groupId = parts[0];
-      const home = parts[1];
-      const away = parts[2];
-      const homeFlag = getEmblemSVG(home);
-      const awayFlag = getEmblemSVG(away);
-      const post = sp.postMatch;
-      const check = post.check;
-
-      let outcomeIcon = '';
-      if (check.scoreHit) {
-        outcomeIcon = '<span class="sys-pred-result-icon hit">&#x2714; 比分命中</span>';
-      } else if (check.outcomeHit) {
-        outcomeIcon = '<span class="sys-pred-result-icon partial">+ 方向命中</span>';
-      } else {
-        outcomeIcon = '<span class="sys-pred-result-icon miss">&#x2718; 未命中</span>';
-      }
-
-      html += `
-        <div class="sys-pred-card fade-in-up" onclick="viewSystemPredictionDetail('${key}')" style="cursor:pointer;">
-          <div class="sys-pred-header">
-            <span class="sys-pred-tag">预测分析</span>
-            <span class="sys-pred-group">${groupId}组</span>
-          </div>
-          <div class="sys-pred-teams">
-            <div class="sys-pred-team">
-              <div class="sys-pred-flag">${homeFlag}</div>
-              <div class="sys-pred-name">${home}</div>
-            </div>
-            <div class="sys-pred-vs">
-              <div class="sys-pred-score">${post.actualScore}</div>
-              <div class="sys-pred-score-label">最终比分</div>
-            </div>
-            <div class="sys-pred-team">
-              <div class="sys-pred-flag">${awayFlag}</div>
-              <div class="sys-pred-name">${away}</div>
-            </div>
-          </div>
-          <div class="sys-pred-card-footer">
-            ${outcomeIcon}
-            <span class="sys-pred-click-hint">&#x1F4A1; 点击查看复盘</span>
-          </div>
-        </div>
-      `;
-    });
-  }
-
-  if (filteredKeys.length === 0 || (date !== 'all' && upcomingKeys.length === 0)) {
-    html = '<div style="text-align:center;color:var(--muted);padding:2rem;">该日期暂无赛前预测</div>';
-  }
+    }
+  });
 
   container.innerHTML = html;
 }
