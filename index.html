@@ -1136,6 +1136,92 @@ body {
   .lb-stats { display: none; }
   .reliable-grid { grid-template-columns: 1fr; }
 }
+.schedule-filter {
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+}
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.filter-tab {
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-tab:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--fg);
+}
+.filter-tab.active {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+.schedule-filter-match {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 0.85rem;
+}
+.schedule-filter-match:last-child {
+  border-bottom: none;
+}
+.schedule-filter-match:hover {
+  background: rgba(255,255,255,0.03);
+}
+.sf-match-group {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(255,184,0,0.1);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  min-width: 30px;
+  text-align: center;
+}
+.sf-match-teams {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+.sf-match-time {
+  font-size: 0.8rem;
+  color: var(--muted);
+  min-width: 50px;
+  text-align: right;
+}
+.sf-match-status {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  min-width: 40px;
+  text-align: center;
+}
+.sf-match-status.finished {
+  color: var(--accent2);
+  background: rgba(0,230,118,0.1);
+}
+.sf-match-status.upcoming {
+  color: var(--blue);
+  background: rgba(100,181,246,0.1);
+}
 </style>
 </head>
 <body>
@@ -1192,6 +1278,16 @@ body {
   <div class="section" id="section-stats">
     <h2 class="section-title">赛事统计</h2>
     <p class="section-desc">2026世界杯整体数据分析与系统预测表现</p>
+    <div class="schedule-filter">
+      <h3 style="font-size:1.1rem;font-weight:900;margin-bottom:0.8rem;">比赛日程筛选</h3>
+      <div class="filter-tabs" id="scheduleFilterTabs">
+        <button class="filter-tab active" data-date="all" onclick="filterScheduleByDate('all')">全部</button>
+        <button class="filter-tab" data-date="6月18日" onclick="filterScheduleByDate('6月18日')">6月18日</button>
+        <button class="filter-tab" data-date="6月24日" onclick="filterScheduleByDate('6月24日')">6月24日</button>
+        <button class="filter-tab" data-date="6月29日" onclick="filterScheduleByDate('6月29日')">6月29日</button>
+      </div>
+      <div id="scheduleFilterResult"></div>
+    </div>
     <div class="stats-grid" id="statsGrid"></div>
     <h3 style="font-size:1.2rem;font-weight:900;margin-bottom:1rem;">系统预测准确率</h3>
     <div class="stats-grid" id="sysPredStats"></div>
@@ -2026,7 +2122,9 @@ const groups = [
       {home:'英格兰',away:'克罗地亚',date:'6月18日',time:'04:00',round:'第1轮',stadium:'大都会人寿体育场, 新泽西'},
       {home:'加纳',away:'巴拿马',date:'6月18日',time:'07:00',round:'第1轮',stadium:'AT&T体育场, 阿灵顿'},
       {home:'英格兰',away:'加纳',date:'6月24日',time:'04:00',round:'第2轮',stadium:'大都会人寿体育场, 新泽西'},
-      {home:'巴拿马',away:'克罗地亚',date:'6月24日',time:'07:00',round:'第2轮',stadium:'AT&T体育场, 阿灵顿'}
+      {home:'巴拿马',away:'克罗地亚',date:'6月24日',time:'07:00',round:'第2轮',stadium:'AT&T体育场, 阿灵顿'},
+      {home:'克罗地亚',away:'英格兰',date:'6月29日',time:'02:00',round:'第3轮',stadium:'大都会人寿体育场, 新泽西'},
+      {home:'巴拿马',away:'加纳',date:'6月29日',time:'02:00',round:'第3轮',stadium:'AT&T体育场, 阿灵顿'}
     ]}
 ];
 
@@ -2738,6 +2836,61 @@ function viewSystemPredictionDetail(key) {
 }
 
 // ==================== STATS ====================
+function filterScheduleByDate(date) {
+  // Update tab active state
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.filter-tab[data-date="${date}"]`).classList.add('active');
+
+  const container = document.getElementById('scheduleFilterResult');
+  let matches = [];
+  
+  groups.forEach(g => {
+    g.matches.forEach(m => {
+      if (date === 'all' || m.date === date) {
+        matches.push({ ...m, groupId: g.id, groupName: g.name });
+      }
+    });
+  });
+
+  // Sort by date and time
+  const dateOrder = { '6月18日': 1, '6月24日': 2, '6月29日': 3 };
+  matches.sort((a, b) => {
+    if (dateOrder[a.date] !== dateOrder[b.date]) return dateOrder[a.date] - dateOrder[b.date];
+    return a.time.localeCompare(b.time);
+  });
+
+  if (matches.length === 0) {
+    container.innerHTML = '<div style="text-align:center;color:var(--muted);padding:1rem;">该日期暂无比赛</div>';
+    return;
+  }
+
+  let html = '';
+  let lastDate = '';
+  matches.forEach(m => {
+    if (date === 'all' && m.date !== lastDate) {
+      html += `<div style="font-size:0.9rem;font-weight:900;color:var(--accent);margin:0.8rem 0 0.4rem;padding-left:0.5rem;">${m.date}</div>`;
+      lastDate = m.date;
+    }
+    const resultKey = `${m.groupId}-${m.home}-${m.away}`;
+    const result = matchResults[resultKey];
+    const isFinished = result && result.finished;
+    const homeFlag = getEmblemSVG(m.home, 20);
+    const awayFlag = getEmblemSVG(m.away, 20);
+
+    html += `
+      <div class="schedule-filter-match">
+        <span class="sf-match-group">${m.groupId}</span>
+        <div class="sf-match-teams">
+          ${homeFlag} ${m.home} vs ${m.away} ${awayFlag}
+        </div>
+        <span class="sf-match-time">${m.time}</span>
+        <span class="sf-match-status ${isFinished ? 'finished' : 'upcoming'}">${isFinished ? result.homeGoals + '-' + result.awayGoals : '未开始'}</span>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
 function renderStats() {
   const grid = document.getElementById('statsGrid');
 
@@ -2877,6 +3030,7 @@ function renderStats() {
     `;
   });
   lb.innerHTML = lbHtml;
+  filterScheduleByDate('all');
 }
 
 // ==================== TOAST ====================
