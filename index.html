@@ -2626,36 +2626,34 @@ function adjustScore(side, delta) {
 }
 
 function updateProbabilities() {
-  const hStr = teamStrength[selectedMatch.home] || 50;
-  const aStr = teamStrength[selectedMatch.away] || 50;
-  const diff = (hStr - aStr) / 100;
-  let homeProb = 40 + diff * 30;
-  let awayProb = 40 - diff * 30;
-  let drawProb = 20;
+  if (!selectedMatch) return;
+  const home = selectedMatch.home;
+  const away = selectedMatch.away;
+  const hStr = teamStrength[home] || 50;
+  const aStr = teamStrength[away] || 50;
+  const diff = hStr - aStr;
 
-  if (homeScore > awayScore) {
-    homeProb = Math.min(80, homeProb + (homeScore - awayScore) * 8);
-    awayProb = Math.max(5, awayProb - (homeScore - awayScore) * 5);
-    drawProb = Math.max(5, 100 - homeProb - awayProb);
-  } else if (awayScore > homeScore) {
-    awayProb = Math.min(80, awayProb + (awayScore - homeScore) * 8);
-    homeProb = Math.max(5, homeProb - (awayScore - homeScore) * 5);
-    drawProb = Math.max(5, 100 - homeProb - awayProb);
-  }
+  // Elo-like probability calculation
+  const expectedHome = 1 / (1 + Math.pow(10, -diff / 40));
+  const rawHome = expectedHome * 100;
+  const rawDraw = Math.max(18, 32 - Math.abs(diff) * 0.7);
+  const rawAway = 100 - rawHome - rawDraw;
 
-  const total = homeProb + drawProb + awayProb;
-  homeProb = Math.round(homeProb / total * 100);
-  drawProb = Math.round(drawProb / total * 100);
-  awayProb = 100 - homeProb - drawProb;
+  // Normalize to 100
+  const total = rawHome + rawDraw + rawAway;
+  const hPct = Math.round(rawHome / total * 100);
+  const dPct = Math.round(rawDraw / total * 100);
+  const aPct = 100 - hPct - dPct;
 
-  document.getElementById('probHome').textContent = homeProb + '%';
-  document.getElementById('probHome').style.width = homeProb + '%';
-  document.getElementById('probDraw').textContent = drawProb + '%';
-  document.getElementById('probDraw').style.width = drawProb + '%';
-  document.getElementById('probAway').textContent = awayProb + '%';
-  document.getElementById('probAway').style.width = awayProb + '%';
-  document.getElementById('probHomeLabel').textContent = selectedMatch.home + ' 胜';
-  document.getElementById('probAwayLabel').textContent = selectedMatch.away + ' 胜';
+  document.getElementById('probHome').style.width = hPct + '%';
+  document.getElementById('probHome').textContent = hPct + '%';
+  document.getElementById('probDraw').style.width = dPct + '%';
+  document.getElementById('probDraw').textContent = dPct + '%';
+  document.getElementById('probAway').style.width = aPct + '%';
+  document.getElementById('probAway').textContent = aPct + '%';
+
+  document.getElementById('probHomeLabel').textContent = home + ' 胜';
+  document.getElementById('probAwayLabel').textContent = away + ' 胜';
 }
 
 // ==================== RELIABLE PREDICTION ====================
@@ -2664,37 +2662,52 @@ function generateReliablePrediction(home, away) {
   const aStr = teamStrength[away] || 50;
   const diff = hStr - aStr;
 
+  // Calculate win probabilities using Elo-like formula
+  const expectedHome = 1 / (1 + Math.pow(10, -diff / 40));
+  const homeWinPct = Math.round(expectedHome * 100);
+  const drawPct = Math.round(Math.max(15, 30 - Math.abs(diff) * 0.8));
+  const awayWinPct = 100 - homeWinPct - drawPct;
+
+  // Normalize
+  const total = homeWinPct + drawPct + awayWinPct;
+  const hW = Math.round(homeWinPct / total * 100);
+  const dW = Math.round(drawPct / total * 100);
+  const aW = 100 - hW - dW;
+
   let outcome, score, confidence;
 
-  if (diff > 25) {
+  // Determine most likely outcome
+  if (hW > aW && hW - aW > 10) {
     outcome = home + ' 胜';
-    score = '2-0 / 3-0';
-    confidence = '85%';
-  } else if (diff > 15) {
-    outcome = home + ' 胜';
-    score = '2-0 / 2-1';
-    confidence = '72%';
-  } else if (diff > 5) {
-    outcome = home + ' 胜';
-    score = '1-0 / 2-1';
-    confidence = '58%';
-  } else if (diff > -5) {
-    outcome = '平局';
-    score = '1-1 / 0-0';
-    confidence = '45%';
-  } else if (diff > -15) {
+    confidence = hW + '%';
+  } else if (aW > hW && aW - hW > 10) {
     outcome = away + ' 胜';
-    score = '0-1 / 1-2';
-    confidence = '55%';
-  } else if (diff > -25) {
-    outcome = away + ' 胜';
-    score = '0-2 / 1-2';
-    confidence = '68%';
+    confidence = aW + '%';
   } else {
-    outcome = away + ' 胜';
-    score = '0-2 / 0-3';
-    confidence = '80%';
+    outcome = home + ' 胜/平局';
+    confidence = Math.max(hW, aW, dW) + '%';
   }
+
+  // Score prediction - consider goal expectation
+  const homeGoalExp = Math.max(0.3, (hStr / 50) * (1.2 + Math.random() * 0.3));
+  const awayGoalExp = Math.max(0.3, (aStr / 50) * (1.2 + Math.random() * 0.3));
+  const totalGoals = homeGoalExp + awayGoalExp;
+
+  // Generate score suggestions based on expected goals
+  const hGoals = Math.round(homeGoalExp);
+  const aGoals = Math.round(awayGoalExp);
+
+  // Multiple score options
+  const scores = [];
+  scores.push(`${Math.max(0, hGoals)}-${Math.max(0, aGoals)}`);
+  if (hGoals > 0) scores.push(`${hGoals-1}-${aGoals}`);
+  if (aGoals > 0) scores.push(`${hGoals}-${aGoals-1}`);
+  if (Math.abs(diff) < 10) scores.push('1-1');
+  if (totalGoals > 3) scores.push(`${hGoals+1}-${aGoals}`);
+
+  // Remove duplicates and limit to 3
+  const uniqueScores = [...new Set(scores)].slice(0, 3);
+  score = uniqueScores.join(' / ');
 
   document.getElementById('reliableOutcome').textContent = outcome;
   document.getElementById('reliableScore').textContent = score;
@@ -2752,9 +2765,19 @@ function generateAnalysis(home, away) {
   let text = '';
   if (favorite) {
     const underdog = favorite === home ? away : home;
-    text = `${favorite}实力评分${teamStrength[favorite]}，明显强于${underdog}（评分${teamStrength[underdog]}）。${favorite}阵容深度、球员个人能力全面占优，历史数据支持其取得积极结果。关键变量包括：近期状态、伤病情况、战术执行力和大赛经验。`;
+    const favStr = teamStrength[favorite];
+    const undStr = teamStrength[underdog];
+    text = `${favorite}实力评分${favStr}，明显强于${underdog}（评分${undStr}），实力差${Math.abs(diff)}分。${favorite}阵容深度、球员个人能力全面占优。`;
+
+    // Add expansion-era insight
+    if (Math.abs(diff) > 20) {
+      text += `扩军48队后弱队防线质量下降，一旦落后容易崩盘，大比分概率上升。`;
+    } else {
+      text += `两队有一定实力差距，但扩军后比赛不确定性增加，冷门概率高于往届。`;
+    }
   } else {
-    text = `两队实力接近，${home}评分${hStr}，${away}评分${aStr}。这将是一场势均力敌的较量，中场控制和定位球效率可能成为决定因素。双方都会比较谨慎，预计是一场低比分对抗。`;
+    text = `两队实力接近，${home}评分${hStr}，${away}评分${aStr}，差距仅${Math.abs(diff)}分。势均力敌的较量中，中场控制和定位球效率是关键。`;
+    text += `扩军后实力接近的球队交锋，平局和一球小胜是主流走势。`;
   }
 
   document.getElementById('aiText').textContent = text;
