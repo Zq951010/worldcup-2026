@@ -1559,6 +1559,9 @@ const matchResults = {
   'K-乌兹别克斯坦-哥伦比亚': { finished: true, score: '1-3', homeGoals: 1, awayGoals: 3 },
   'L-英格兰-克罗地亚': { finished: true, score: '4-2', homeGoals: 4, awayGoals: 2 },
   'L-加纳-巴拿马': { finished: true, score: '1-0', homeGoals: 1, awayGoals: 0 },
+  'A-捷克-南非': { finished: true, score: '1-1', homeGoals: 1, awayGoals: 1 },
+  'B-瑞士-波黑': { finished: true, score: '4-1', homeGoals: 4, awayGoals: 1 },
+  'B-加拿大-卡塔尔': { finished: true, score: '6-0', homeGoals: 6, awayGoals: 0 },
   'L-巴拿马-克罗地亚': { finished: false, score: '0-0', homeGoals: 0, awayGoals: 0 },
 };
 
@@ -1634,16 +1637,29 @@ const systemPredictions = {
   // ===== A组 第2轮、第3轮 =====
   'A-捷克-南非': {
     preMatch: {
-      homeWin: 38, draw: 30, awayWin: 32,
-      mostLikelyScores: ['1-1', '1-0', '0-0'],
-      analysis: '捷克首战失利急需反弹，南非两连败已到悬崖边。但捷克攻击力有限，南非为荣誉而战可能爆冷。'
+      homeWin: 55, draw: 25, awayWin: 20,
+      mostLikelyScores: ['2-0', '2-1', '1-0'],
+      analysis: '捷克整体实力占优，中场硬度出色。南非首轮0-2负墨西哥，后防漏洞多且3名大将停赛。本场是出线生死战，双方均需抢分。'
+    },
+    postMatch: {
+      actualScore: '1-1',
+      homeGoals: [{player:'萨迪莱克', minute:'6\'', assist:''}],
+      awayGoals: [{player:'莫库纳', minute:'83\'', assist:'点球'}],
+      check: {
+        scoreHit: false,
+        outcomeHit: false,
+        scoreTier: '模型三档未命中,实际1-1',
+        outcomeComment: '胜负:概率偏捷克55%,实际平局,方向未命中',
+        recap: '复盘:捷克6分钟进球领先,但未能守住优势。南非83分钟点球绝平,背水一战拼劲十足',
+        summary: '生死战冷平——不能低估为生存而战的球队'
+      }
     }
   },
   'A-墨西哥-韩国': {
     preMatch: {
-      homeWin: 40, draw: 32, awayWin: 28,
-      mostLikelyScores: ['1-1', '2-1', '1-0'],
-      analysis: '东道主墨西哥坐拥主场之利，韩国有孙兴慜领衔的快速反击。两队实力接近，平局概率不小。'
+      homeWin: 45, draw: 30, awayWin: 25,
+      mostLikelyScores: ['2-1', '1-1', '2-0'],
+      analysis: '两队首轮均取胜,本场胜者锁定小组第一。墨西哥技术流+主场优势,韩国高强度逼抢+孙兴慜领衔。两队实力旗鼓相当,是今日焦点战。'
     }
   },
   'A-捷克-墨西哥': {
@@ -1663,16 +1679,54 @@ const systemPredictions = {
   // ===== B组 =====
   'B-瑞士-波黑': {
     preMatch: {
-      homeWin: 45, draw: 30, awayWin: 25,
-      mostLikelyScores: ['2-1', '1-1', '1-0'],
-      analysis: '瑞士实力占优，波黑首战平局但整体实力偏弱。'
+      homeWin: 52, draw: 28, awayWin: 20,
+      mostLikelyScores: ['1-0', '2-0', '2-1'],
+      analysis: '瑞士防守体系教科书级别，三中卫阵型失误极少。波黑依赖哲科个人能力，中场拦截薄弱。瑞士整体稳定性占优。'
+    },
+    postMatch: {
+      actualScore: '4-1',
+      homeGoals: [
+        {player:'阿坎吉', minute:'23\'', assist:'扎卡'},
+        {player:'恩博洛', minute:'45\'', assist:'弗罗伊勒'},
+        {player:'扎卡', minute:'67\'', assist:''},
+        {player:'沙奇里', minute:'82\'', assist:'阿坎吉'}
+      ],
+      awayGoals: [{player:'哲科', minute:'55\'', assist:'德迪奇'}],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档第一档1-0未命中,实际4-1大胜',
+        outcomeComment: '胜负:概率偏瑞士52%,实际瑞士胜,方向命中',
+        recap: '复盘:瑞士进攻火力全开,阿坎吉、恩博洛、扎卡、沙奇里多点开花。波黑仅哲科扳回一城,中场拦截薄弱被彻底暴露',
+        summary: '瑞士军刀锋利——4-1大胜波黑,攻防两端碾压'
+      }
     }
   },
   'B-加拿大-卡塔尔': {
     preMatch: {
-      homeWin: 42, draw: 30, awayWin: 28,
-      mostLikelyScores: ['1-0', '2-1', '1-1'],
-      analysis: '加拿大东道主之一，卡塔尔2022东道主经验丰富但实力有限。'
+      homeWin: 60, draw: 22, awayWin: 18,
+      mostLikelyScores: ['2-0', '1-0', '2-1'],
+      analysis: '加拿大坐拥本土东道主优势,首轮逼平瑞士士气正盛。卡塔尔上届三战全败,首轮逼平波黑但65分钟后体能下滑严重。'
+    },
+    postMatch: {
+      actualScore: '6-0',
+      homeGoals: [
+        {player:'乔纳森·戴维', minute:'12\'', assist:'阿方索·戴维斯'},
+        {player:'阿方索·戴维斯', minute:'34\'', assist:'布坎南'},
+        {player:'拉林', minute:'52\'', assist:'乔纳森·戴维'},
+        {player:'奥维耶', minute:'63\'', assist:''},
+        {player:'拉林', minute:'75\'', assist:'科内lius'},
+        {player:'卡耶', minute:'88\'', assist:'奥维耶'}
+      ],
+      awayGoals: [],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档第一档2-0未命中,实际6-0大胜',
+        outcomeComment: '胜负:概率偏加拿大60%,实际加拿大大胜,方向命中',
+        recap: '复盘:东道主主场优势爆发,加拿大6-0狂胜卡塔尔。卡塔尔65分钟后体能崩盘,防线彻底瓦解',
+        summary: '东道主降维打击——加拿大6-0创本届最大分差'
+      }
     }
   },
   'B-瑞士-加拿大': {
@@ -2002,10 +2056,10 @@ const standingsData = {
     { team: '南非', played: 1, won: 0, drawn: 0, lost: 1, gf: 0, ga: 2, gd: -2, pts: 0 }
   ],
   'B': [
-    { team: '加拿大', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '波黑', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '卡塔尔', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '瑞士', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 }
+    { team: '瑞士', played: 2, won: 1, drawn: 1, lost: 0, gf: 5, ga: 2, gd: 3, pts: 4 },
+    { team: '加拿大', played: 2, won: 1, drawn: 1, lost: 0, gf: 7, ga: 1, gd: 6, pts: 4 },
+    { team: '波黑', played: 2, won: 0, drawn: 1, lost: 1, gf: 2, ga: 5, gd: -3, pts: 1 },
+    { team: '卡塔尔', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 7, gd: -6, pts: 1 }
   ],
   'C': [
     { team: '苏格兰', played: 1, won: 1, drawn: 0, lost: 0, gf: 1, ga: 0, gd: 1, pts: 3 },
