@@ -2356,25 +2356,104 @@ function renderStandings() {
 // ==================== PREDICTION MODAL ====================
 // Restore reliablePrediction HTML structure if it was replaced by viewMyPrediction
 function restoreReliablePredictionHTML() {
-  const rp = document.getElementById('reliablePrediction');
-  if (!document.getElementById('reliableOutcome')) {
-    rp.innerHTML = `
-      <div class="reliable-title">&#x1F3C6; 智能预测分析</div>
-      <div class="reliable-grid">
-        <div class="reliable-item">
-          <div class="label">推荐胜平负</div>
-          <div class="value" id="reliableOutcome">--</div>
-        </div>
-        <div class="reliable-item">
-          <div class="label">推荐比分</div>
-          <div class="value green" id="reliableScore">--</div>
-        </div>
-        <div class="reliable-item">
-          <div class="label">信心指数</div>
-          <div class="value blue" id="reliableConfidence">--</div>
+  const modalBody = document.querySelector('.modal-body');
+  // Check if key elements exist - if not, restore full structure
+  if (!document.getElementById('liveAnalysis') || !document.querySelector('.prob-section')) {
+    modalBody.innerHTML = `
+      <!-- Reliable Prediction -->
+      <div class="reliable-prediction" id="reliablePrediction">
+        <div class="reliable-title">&#x1F3C6; 智能预测分析</div>
+        <div class="reliable-grid">
+          <div class="reliable-item">
+            <div class="label">推荐胜平负</div>
+            <div class="value" id="reliableOutcome">--</div>
+          </div>
+          <div class="reliable-item">
+            <div class="label">推荐比分</div>
+            <div class="value green" id="reliableScore">--</div>
+          </div>
+          <div class="reliable-item">
+            <div class="label">信心指数</div>
+            <div class="value blue" id="reliableConfidence">--</div>
+          </div>
         </div>
       </div>
+
+      <!-- Live Analysis -->
+      <div class="live-analysis" id="liveAnalysis">
+        <div class="live-analysis-title">&#x1F4CA; 临场深度分析</div>
+        <div class="live-analysis-text" id="liveText">加载中...</div>
+      </div>
+
+      <!-- User Prediction (hidden) -->
+      <div class="prediction-section" style="display:none !important;">
+        <div class="prediction-label">你的比分预测</div>
+        <div class="score-predictor">
+          <div class="score-team">
+            <div class="name" id="scoreHomeLabel">主队</div>
+            <div class="score-input-wrap">
+              <button class="score-btn minus" onclick="adjustScore('home',-1)">&minus;</button>
+              <div class="score-value" id="homeScore">0</div>
+              <button class="score-btn" onclick="adjustScore('home',1)">+</button>
+            </div>
+          </div>
+          <div class="score-dash">&ndash;</div>
+          <div class="score-team">
+            <div class="name" id="scoreAwayLabel">客队</div>
+            <div class="score-input-wrap">
+              <button class="score-btn minus" onclick="adjustScore('away',-1)">&minus;</button>
+              <div class="score-value" id="awayScore">0</div>
+              <button class="score-btn" onclick="adjustScore('away',1)">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Win Probability -->
+      <div class="prob-section">
+        <div class="prediction-label">胜率分布</div>
+        <div class="prob-bar-wrap">
+          <div class="prob-segment prob-home" id="probHome">33%</div>
+          <div class="prob-segment prob-draw" id="probDraw">34%</div>
+          <div class="prob-segment prob-away" id="probAway">33%</div>
+        </div>
+        <div class="prob-labels">
+          <span id="probHomeLabel">主胜</span>
+          <span>平局</span>
+          <span id="probAwayLabel">客胜</span>
+        </div>
+      </div>
+
+      <!-- AI Analysis -->
+      <div class="ai-analysis" id="aiAnalysis">
+        <div class="ai-analysis-title">&#x1F916; 球队实力对比</div>
+        <div class="ai-analysis-text" id="aiText">加载中...</div>
+      </div>
+
+      <button class="btn-submit" onclick="closeModal()">关闭</button>
     `;
+  } else {
+    // Structure exists, just reset reliablePrediction inner content
+    const rp = document.getElementById('reliablePrediction');
+    if (!document.getElementById('reliableOutcome')) {
+      rp.innerHTML = `
+        <div class="reliable-title">&#x1F3C6; 智能预测分析</div>
+        <div class="reliable-grid">
+          <div class="reliable-item">
+            <div class="label">推荐胜平负</div>
+            <div class="value" id="reliableOutcome">--</div>
+          </div>
+          <div class="reliable-item">
+            <div class="label">推荐比分</div>
+            <div class="value green" id="reliableScore">--</div>
+          </div>
+          <div class="reliable-item">
+            <div class="label">信心指数</div>
+            <div class="value blue" id="reliableConfidence">--</div>
+          </div>
+        </div>
+      `;
+    }
   }
 }
 
