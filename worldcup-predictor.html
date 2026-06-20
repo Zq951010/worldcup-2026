@@ -1523,17 +1523,17 @@ function getEmblemSVG(name, size) {
 const teamStrength = {
   '巴西':95,'阿根廷':94,'法国':93,'英格兰':90,'西班牙':89,
   '葡萄牙':88,'德国':87,'荷兰':85,'比利时':84,'克罗地亚':83,
-  '乌拉圭':82,'哥伦比亚':80,'美国':79,'墨西哥':80,'瑞士':80,
-  '日本':76,'摩洛哥':75,'塞内加尔':74,'澳大利亚':73,'韩国':72,
-  '厄瓜多尔':70,'土耳其':69,'瑞典':68,'加纳':66,'挪威':64,
+  '乌拉圭':82,'美国':82,'哥伦比亚':80,'墨西哥':80,'瑞士':80,
+  '摩洛哥':78,'日本':76,'塞内加尔':74,'澳大利亚':73,'韩国':72,
+  '厄瓜多尔':70,'瑞典':68,'巴拉圭':60,'加纳':66,'挪威':64,
   '奥地利':63,'刚果(金)':62,'沙特':61,'伊朗':60,'突尼斯':59,
-  '科特迪瓦':58,'苏格兰':57,'巴拉圭':56,'加拿大':62,'新西兰':51,
+  '科特迪瓦':58,'苏格兰':55,'加拿大':62,'新西兰':51,
   '巴拿马':50,'伊拉克':49,'埃及':48,'阿尔及利亚':47,'乌兹别克斯坦':46,
-  '约旦':45,'波黑':44,'海地':43,'佛得角':41,'库拉索':40,
+  '约旦':45,'土耳其':58,'波黑':44,'海地':35,'佛得角':41,'库拉索':40,
   '捷克':60,'南非':42,'卡塔尔':42
 };
 
-// 实时比赛结果数据 (截至2026年6月19日)
+// 实时比赛结果数据 (截至2026年6月20日)
 const matchResults = {
   'A-墨西哥-南非': { finished: true, score: '2-0', homeGoals: 2, awayGoals: 0 },
   'A-韩国-捷克': { finished: true, score: '2-1', homeGoals: 2, awayGoals: 1 },
@@ -1563,6 +1563,10 @@ const matchResults = {
   'B-瑞士-波黑': { finished: true, score: '4-1', homeGoals: 4, awayGoals: 1 },
   'B-加拿大-卡塔尔': { finished: true, score: '6-0', homeGoals: 6, awayGoals: 0 },
   'A-墨西哥-韩国': { finished: true, score: '1-0', homeGoals: 1, awayGoals: 0 },
+  'C-苏格兰-摩洛哥': { finished: true, score: '0-1', homeGoals: 0, awayGoals: 1 },
+  'C-巴西-海地': { finished: true, score: '3-0', homeGoals: 3, awayGoals: 0 },
+  'D-美国-澳大利亚': { finished: true, score: '2-0', homeGoals: 2, awayGoals: 0 },
+  'D-土耳其-巴拉圭': { finished: true, score: '0-1', homeGoals: 0, awayGoals: 1 },
   'L-巴拿马-克罗地亚': { finished: false, score: '0-0', homeGoals: 0, awayGoals: 0 },
 };
 
@@ -1763,6 +1767,19 @@ const systemPredictions = {
       homeWin: 30, draw: 35, awayWin: 35,
       mostLikelyScores: ['1-1', '0-1', '1-0'],
       analysis: '两队首战均拿分，摩洛哥2022四强底蕴深厚，苏格兰硬朗但进攻乏力，平局可能性大。'
+    },
+    postMatch: {
+      actualScore: '0-1',
+      homeGoals: [],
+      awayGoals: [{player:'赛巴里', minute:'2\'', assist:''}],
+      check: {
+        scoreHit: true,
+        outcomeHit: true,
+        scoreTier: '模型三档第二档0-1,命中',
+        outcomeComment: '胜负:概率偏摩洛哥35%,实际客胜,方向命中',
+        recap: '复盘:开场仅70秒赛巴里闪电破门,摩洛哥复制了本届世界杯"闪击"趋势。苏格兰全场未能扳平,进攻乏力问题暴露无遗',
+        summary: '70秒定胜负——摩洛哥闪击苏格兰,1胜1平积4分暂居C组第一'
+      }
     }
   },
   'C-巴西-海地': {
@@ -1770,6 +1787,23 @@ const systemPredictions = {
       homeWin: 72, draw: 18, awayWin: 10,
       mostLikelyScores: ['3-0', '2-0', '4-1'],
       analysis: '巴西实力碾压，海地世界排名低且首战告负。但巴西首战仅1-1平摩洛哥，进攻效率存疑，海地防守反击可能偷一个。'
+    },
+    postMatch: {
+      actualScore: '3-0',
+      homeGoals: [
+        {player:'库尼亚', minute:'23\'', assist:'维尼修斯'},
+        {player:'库尼亚', minute:'36\'', assist:''},
+        {player:'维尼修斯', minute:'45+3\'', assist:''}
+      ],
+      awayGoals: [],
+      check: {
+        scoreHit: true,
+        outcomeHit: true,
+        scoreTier: '模型三档第一档3-0,命中',
+        outcomeComment: '胜负:概率偏巴西72%,实际主胜,方向命中',
+        recap: '复盘:库尼亚双响+维尼修斯传射破门,巴西半场3-0打花比赛。海地两连败零进球,成为本届首支出局球队',
+        summary: '库尼亚双响维尼修斯传射——巴西3-0完胜海地,升至C组第一'
+      }
     }
   },
   'C-苏格兰-巴西': {
@@ -1792,6 +1826,22 @@ const systemPredictions = {
       homeWin: 48, draw: 30, awayWin: 22,
       mostLikelyScores: ['2-1', '1-0', '1-1'],
       analysis: '美国东道主+首战大胜，澳大利亚首战也赢了。美国实力略强但澳大利亚不容小觑。'
+    },
+    postMatch: {
+      actualScore: '2-0',
+      homeGoals: [
+        {player:'伯吉斯(乌龙)', minute:'11\'', assist:'巴洛贡'},
+        {player:'弗里曼', minute:'43\'', assist:''}
+      ],
+      awayGoals: [],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档未命中,实际2-0',
+        outcomeComment: '胜负:概率偏美国48%,实际主胜,方向命中',
+        recap: '复盘:巴洛贡11分钟制造伯吉斯乌龙,弗里曼43分钟头球扩大比分。美国半场2-0锁定胜局,两连胜提前出线',
+        summary: '东道主两连胜——美国2-0完胜澳大利亚,提前一轮锁定32强'
+      }
     }
   },
   'D-土耳其-巴拉圭': {
@@ -1799,6 +1849,19 @@ const systemPredictions = {
       homeWin: 40, draw: 32, awayWin: 28,
       mostLikelyScores: ['1-0', '1-1', '2-1'],
       analysis: '两队首战均负，背水一战。土耳其欧洲杯四强底蕴，巴拉圭南美硬派。'
+    },
+    postMatch: {
+      actualScore: '0-1',
+      homeGoals: [],
+      awayGoals: [{player:'加拉尔萨', minute:'2\'', assist:'恩西索'}],
+      check: {
+        scoreHit: false,
+        outcomeHit: false,
+        scoreTier: '模型三档未命中,实际0-1巴拉圭胜',
+        outcomeComment: '胜负:概率偏土耳其40%,实际巴拉圭胜,方向未命中',
+        recap: '复盘:开场65秒加拉尔萨远射贴地斩闪击!阿尔米隆45+3分钟因捂嘴交谈触发新规被直红罚下。10人巴拉圭顽强守住了胜果,土耳其两连败提前出局',
+        summary: '65秒闪击+捂嘴染红——巴拉圭1-0绝杀土耳其,惊天冷门'
+      }
     }
   },
   'D-土耳其-美国': {
@@ -2076,16 +2139,16 @@ const standingsData = {
     { team: '卡塔尔', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 7, gd: -6, pts: 1 }
   ],
   'C': [
-    { team: '苏格兰', played: 1, won: 1, drawn: 0, lost: 0, gf: 1, ga: 0, gd: 1, pts: 3 },
-    { team: '巴西', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '摩洛哥', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '海地', played: 1, won: 0, drawn: 0, lost: 1, gf: 0, ga: 1, gd: -1, pts: 0 }
+    { team: '巴西', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 1, gd: 3, pts: 4 },
+    { team: '摩洛哥', played: 2, won: 1, drawn: 1, lost: 0, gf: 2, ga: 1, gd: 1, pts: 4 },
+    { team: '苏格兰', played: 2, won: 1, drawn: 0, lost: 1, gf: 1, ga: 1, gd: 0, pts: 3 },
+    { team: '海地', played: 2, won: 0, drawn: 0, lost: 2, gf: 0, ga: 4, gd: -4, pts: 0 }
   ],
   'D': [
-    { team: '美国', played: 1, won: 1, drawn: 0, lost: 0, gf: 4, ga: 1, gd: 3, pts: 3 },
-    { team: '澳大利亚', played: 1, won: 1, drawn: 0, lost: 0, gf: 1, ga: 0, gd: 1, pts: 3 },
-    { team: '土耳其', played: 1, won: 0, drawn: 0, lost: 1, gf: 0, ga: 1, gd: -1, pts: 0 },
-    { team: '巴拉圭', played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 4, gd: -3, pts: 0 }
+    { team: '美国', played: 2, won: 2, drawn: 0, lost: 0, gf: 6, ga: 1, gd: 5, pts: 6 },
+    { team: '澳大利亚', played: 2, won: 1, drawn: 0, lost: 1, gf: 1, ga: 2, gd: -1, pts: 3 },
+    { team: '巴拉圭', played: 2, won: 1, drawn: 0, lost: 1, gf: 2, ga: 5, gd: -3, pts: 3 },
+    { team: '土耳其', played: 2, won: 0, drawn: 0, lost: 2, gf: 0, ga: 3, gd: -3, pts: 0 }
   ],
   'E': [
     { team: '德国', played: 1, won: 1, drawn: 0, lost: 0, gf: 7, ga: 1, gd: 6, pts: 3 },
@@ -2671,9 +2734,31 @@ function updateProbabilities() {
   document.getElementById('probAwayLabel').textContent = away + ' 胜';
 }
 
+// V2.1: Check if both teams are in "desperation" mode (both lost their last match)
+// Based on Turkey 0-1 Paraguay upset - both teams lost R1, match was highly unpredictable
+function checkDesperationMatch(home, away) {
+  // Check matchResults for both teams' most recent results
+  const homeLost = Object.keys(matchResults).some(key => {
+    if (!key.startsWith(home + '-') && !key.endsWith('-' + home)) return false;
+    const r = matchResults[key];
+    if (!r.finished) return false;
+    if (key.startsWith(home + '-')) return r.homeGoals < r.awayGoals;
+    return r.awayGoals < r.homeGoals;
+  });
+  const awayLost = Object.keys(matchResults).some(key => {
+    if (!key.startsWith(away + '-') && !key.endsWith('-' + away)) return false;
+    const r = matchResults[key];
+    if (!r.finished) return false;
+    if (key.startsWith(away + '-')) return r.homeGoals < r.awayGoals;
+    return r.awayGoals < r.homeGoals;
+  });
+  return homeLost && awayLost;
+}
+
 // ==================== RELIABLE PREDICTION V2 ====================
-// Calibrated against 2026 World Cup actual results (24 matches through June 19)
-// Key findings: high draw rate, weak teams collapse after conceding, host advantage real
+// Calibrated against 2026 World Cup actual results (32 matches through June 20)
+// Key findings: high draw rate, weak teams collapse, host advantage real, early goals trend
+// V2.1: Added "desperation match" detection for teams that both lost round 1
 function generateReliablePrediction(home, away) {
   const hStr = teamStrength[home] || 50;
   const aStr = teamStrength[away] || 50;
@@ -2685,10 +2770,16 @@ function generateReliablePrediction(home, away) {
   const drawPct = Math.round(Math.max(20, 35 - Math.abs(diff) * 0.6));
   const awayWinPct = 100 - homeWinPct - drawPct;
 
+  // V2.1: "Desperation match" factor - when both teams lost their previous match,
+  // the match becomes more unpredictable (Turkey 0-1 Paraguay was such a case)
+  // Increase draw probability slightly for desperation matches
+  const isDesperation = checkDesperationMatch(home, away);
+  const desperationBonus = isDesperation ? 5 : 0;
+
   // Normalize
-  const total = homeWinPct + drawPct + awayWinPct;
-  const hW = Math.round(homeWinPct / total * 100);
-  const dW = Math.round(drawPct / total * 100);
+  const totalRaw = homeWinPct + drawPct + desperationBonus + awayWinPct;
+  const hW = Math.round(homeWinPct / totalRaw * 100);
+  const dW = Math.round((drawPct + desperationBonus) / totalRaw * 100);
   const aW = 100 - hW - dW;
 
   let outcome, score, confidence;
@@ -2828,15 +2919,15 @@ function generateAnalysis(home, away) {
     const undStr = teamStrength[underdog];
     text = `${favorite}实力评分${favStr}，明显强于${underdog}（评分${undStr}），实力差${Math.abs(diff)}分。${favorite}阵容深度、球员个人能力全面占优。`;
 
-    // V2: Data-driven insights from 2026 WC results
+    // V2.1: Updated with June 20 data
     if (Math.abs(diff) > 20) {
-      text += `扩军48队后弱队防线质量下降，一旦落后容易崩盘。本届已出现多场大比分（加拿大6-0卡塔尔、德国7-1库拉索、瑞典5-1突尼斯），强队vs弱队大胜概率显著高于往届。`;
+      text += `扩军48队后弱队防线质量下降，一旦落后容易崩盘。本届已出现多场大比分（加拿大6-0卡塔尔、德国7-1库拉索、巴西3-0海地），强队vs弱队大胜概率显著高于往届。`;
     } else {
-      text += `两队有一定实力差距，但本届冷门频发（葡萄牙1-1刚果金、荷兰2-2日本、巴西1-1摩洛哥），不能排除爆冷可能。`;
+      text += `两队有一定实力差距，但本届冷门频发（葡萄牙1-1刚果金、荷兰2-2日本、土耳其0-1巴拉圭），不能排除爆冷可能。`;
     }
   } else {
     text = `两队实力接近，${home}评分${hStr}，${away}评分${aStr}，差距仅${Math.abs(diff)}分。势均力敌的较量中，中场控制和定位球效率是关键。`;
-    text += `本届世界杯平局率极高（24场中超过8场平局），实力接近的交锋1-1、0-0是高频比分。`;
+    text += `本届世界杯平局率极高（32场中超过10场平局），实力接近的交锋1-1、0-0是高频比分。`;
 
     // V2: Add specific pattern recognition
     if (Math.abs(diff) <= 5) {
@@ -2844,10 +2935,18 @@ function generateAnalysis(home, away) {
     }
   }
 
+  // V2.1: Early goals trend (flash strike pattern)
+  text += `\n\n【闪击趋势】本届世界杯开场3分钟内进球频率极高（摩洛哥70秒破门苏格兰、巴拉圭65秒闪击土耳其、加纳96分钟绝杀），比赛开局阶段需要高度警惕。`;
+
+  // V2.1: Desperation match warning
+  if (checkDesperationMatch(home, away)) {
+    text += `\n\n【背水之战】两队此前均遭遇败绩，本场为出线生死战。背水一战的比赛不确定性极大（参考土耳其0-1巴拉圭冷门），任何结果都可能发生。`;
+  }
+
   // V2: Add match context from actual results
   const weakTeam = (hStr < 50 || aStr < 50) ? (hStr < 50 ? home : away) : null;
   if (weakTeam) {
-    text += `注意：${weakTeam}实力评分低于50，本届低评分球队失球率极高，防线稳定性堪忧。`;
+    text += `\n注意：${weakTeam}实力评分低于50，本届低评分球队失球率极高（海地2场丢4球出局、卡塔尔2场丢7球），防线稳定性堪忧。`;
   }
 
   document.getElementById('aiText').textContent = text;
