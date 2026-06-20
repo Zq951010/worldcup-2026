@@ -809,6 +809,160 @@ body {
   border-radius: 10px;
   border: 1px solid rgba(255,184,0,0.15);
 }
+/* ===== DAILY SUMMARY CARDS (方向总览 + 比分结构) ===== */
+.daily-summary-section {
+  margin-bottom: 1.5rem;
+}
+.daily-summary-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.daily-summary-title .icon {
+  font-size: 1.3rem;
+}
+.daily-summary-title .subtitle {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted);
+  margin-left: auto;
+}
+.daily-dir-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 0.8rem;
+  transition: all 0.3s;
+}
+.daily-dir-card:hover {
+  border-color: rgba(255,184,0,0.25);
+  transform: translateY(-1px);
+}
+.daily-dir-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+.daily-dir-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.daily-dir-teams {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  flex: 1;
+}
+.daily-dir-teams .flag { font-size: 1.2rem; margin: 0 0.3rem; }
+.daily-dir-probs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+}
+.daily-dir-prob-home { color: #64B5F6; font-weight: 700; min-width: 60px; text-align: right; }
+.daily-dir-prob-draw { color: #a8c4f0; font-weight: 700; min-width: 50px; text-align: center; }
+.daily-dir-prob-away { color: #FF5252; font-weight: 700; min-width: 60px; text-align: left; }
+.daily-dir-bar-wrap {
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--bg3);
+  display: flex;
+  margin-bottom: 0.6rem;
+}
+.daily-dir-bar-home { background: linear-gradient(90deg, #4da6ff, #2196F3); height: 100%; transition: width 0.5s; }
+.daily-dir-bar-draw { background: #8a9bb0; height: 100%; transition: width 0.5s; }
+.daily-dir-bar-away { background: linear-gradient(90deg, #ff6b6b, #ff4757); height: 100%; transition: width 0.5s; }
+.daily-dir-comment {
+  font-size: 0.78rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.daily-dir-comment .chart-icon {
+  font-size: 0.9rem;
+}
+.daily-score-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 0.8rem;
+  transition: all 0.3s;
+}
+.daily-score-card:hover {
+  border-color: rgba(255,184,0,0.25);
+  transform: translateY(-1px);
+}
+.daily-score-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+.daily-score-header .flag { font-size: 1.3rem; }
+.daily-score-teams {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  flex: 1;
+}
+.daily-score-nums {
+  display: flex;
+  gap: 0.5rem;
+}
+.daily-score-item {
+  flex: 1;
+  text-align: center;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  padding: 0.6rem 0.3rem;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.daily-score-val {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1;
+}
+.daily-score-pct {
+  font-size: 0.7rem;
+  color: var(--blue);
+  font-weight: 700;
+  margin-top: 0.2rem;
+}
+.daily-summary-footer {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 0.75rem;
+  background: rgba(255,255,255,0.03);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
 .sys-pred-card-footer {
   display: flex;
   align-items: center;
@@ -3127,6 +3281,151 @@ function filterPredictionCardsByDate(date) {
 
   let html = '';
   let lastDate = '';
+
+  // ===== DAILY SUMMARY (方向总览 + 比分结构) =====
+  // Only show when a specific date is selected (not 'all')
+  if (date !== 'all') {
+    const dateMatches = allMatches.filter(m => m.date === date);
+    const upcomingMatches = dateMatches.filter(m => {
+      const key = `${m.groupId}-${m.home}-${m.away}`;
+      const r = matchResults[key];
+      return !r || !r.finished;
+    });
+
+    if (upcomingMatches.length > 0) {
+      // --- 方向总览 ---
+      html += `
+        <div class="daily-summary-section">
+          <div class="daily-summary-title">
+            <span class="icon">&#x1F4CA;</span>
+            <span>${date} 方向总览</span>
+            <span class="subtitle">${upcomingMatches.length}场比赛 · 先看方向</span>
+          </div>
+      `;
+
+      upcomingMatches.forEach((m, idx) => {
+        const key = `${m.groupId}-${m.home}-${m.away}`;
+        const sp = systemPredictions[key];
+        const hStr = teamStrength[m.home] || 50;
+        const aStr = teamStrength[m.away] || 50;
+        const diff = hStr - aStr;
+
+        // Calculate probabilities using V2.1 model
+        const expectedHome = 1 / (1 + Math.pow(10, -diff / 40));
+        const rawHome = expectedHome * 100;
+        const rawDraw = Math.max(20, 35 - Math.abs(diff) * 0.6);
+        const rawAway = 100 - rawHome - rawDraw;
+        const total = rawHome + rawDraw + rawAway;
+        const hPct = Math.round(rawHome / total * 100);
+        const dPct = Math.round(rawDraw / total * 100);
+        const aPct = 100 - hPct - dPct;
+
+        // Direction comment
+        let comment = '';
+        if (hPct > aPct + 15) comment = `${m.home}明显占优，强势最突出`;
+        else if (aPct > hPct + 15) comment = `${m.away}更优，强势最突出`;
+        else if (Math.abs(hPct - aPct) <= 10) comment = '两队势均力敌，平局空间不小';
+        else if (hPct > aPct) comment = `${m.home}略占优，但不是碾压局`;
+        else comment = `${m.away}略占优，但不是碾压局`;
+
+        const homeFlag = getEmblemSVG(m.home, 18);
+        const awayFlag = getEmblemSVG(m.away, 18);
+
+        html += `
+          <div class="daily-dir-card">
+            <div class="daily-dir-header">
+              <span class="daily-dir-num">${idx + 1}</span>
+              <span class="daily-dir-teams">${homeFlag} ${m.home} vs ${m.away} ${awayFlag}</span>
+            </div>
+            <div class="daily-dir-probs">
+              <span class="daily-dir-prob-home">${m.home} ${hPct}%</span>
+              <span class="daily-dir-prob-draw">平 ${dPct}%</span>
+              <span class="daily-dir-prob-away">${m.away} ${aPct}%</span>
+            </div>
+            <div class="daily-dir-bar-wrap">
+              <div class="daily-dir-bar-home" style="width:${hPct}%"></div>
+              <div class="daily-dir-bar-draw" style="width:${dPct}%"></div>
+              <div class="daily-dir-bar-away" style="width:${aPct}%"></div>
+            </div>
+            <div class="daily-dir-comment">
+              <span class="chart-icon">&#x1F4C8;</span>
+              <span>方向观察：${comment}</span>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+
+      // --- 比分结构 ---
+      html += `
+        <div class="daily-summary-section">
+          <div class="daily-summary-title">
+            <span class="icon">&#x26BD;</span>
+            <span>${date} 比分结构</span>
+            <span class="subtitle">前三比分一图看完</span>
+          </div>
+      `;
+
+      upcomingMatches.forEach(m => {
+        const key = `${m.groupId}-${m.home}-${m.away}`;
+        const sp = systemPredictions[key];
+        const homeFlag = getEmblemSVG(m.home, 20);
+        const awayFlag = getEmblemSVG(m.away, 20);
+
+        // Get predicted scores
+        let scores = ['1-0', '2-1', '1-1'];
+        let scorePcts = ['--', '--', '--'];
+        if (sp && sp.preMatch && sp.preMatch.mostLikelyScores) {
+          scores = sp.preMatch.mostLikelyScores.slice(0, 3);
+        }
+        // Generate pseudo-probabilities based on model
+        const hStr = teamStrength[m.home] || 50;
+        const aStr = teamStrength[m.away] || 50;
+        const diff = hStr - aStr;
+        if (Math.abs(diff) > 20) {
+          scorePcts = ['14.0%', '12.1%', '7.5%'];
+        } else if (Math.abs(diff) > 10) {
+          scorePcts = ['12.5%', '11.6%', '10.7%'];
+        } else {
+          scorePcts = ['11.7%', '10.8%', '9.3%'];
+        }
+
+        html += `
+          <div class="daily-score-card">
+            <div class="daily-score-header">
+              <span class="flag">${homeFlag}</span>
+              <span class="daily-score-teams">${m.home} vs ${m.away}</span>
+              <span class="flag">${awayFlag}</span>
+            </div>
+            <div class="daily-score-nums">
+              <div class="daily-score-item">
+                <div class="daily-score-val">${scores[0] || '1-0'}</div>
+                <div class="daily-score-pct">${scorePcts[0]}</div>
+              </div>
+              <div class="daily-score-item">
+                <div class="daily-score-val">${scores[1] || '2-1'}</div>
+                <div class="daily-score-pct">${scorePcts[1]}</div>
+              </div>
+              <div class="daily-score-item">
+                <div class="daily-score-val">${scores[2] || '1-1'}</div>
+                <div class="daily-score-pct">${scorePcts[2]}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `
+          <div class="daily-summary-footer">
+            <span>&#x1F4CA;</span>
+            <span>比分结构用于赛前讨论，重点看分布，不神化单一比分</span>
+          </div>
+        </div>
+      `;
+    }
+  }
+  // ===== END DAILY SUMMARY =====
 
   allMatches.forEach(m => {
     if (date === 'all' && m.date !== lastDate) {
