@@ -3314,11 +3314,11 @@ function filterPredictionCardsByDate(date) {
         const expectedHome = 1 / (1 + Math.pow(10, -diff / 40));
         const rawHome = expectedHome * 100;
         const rawDraw = Math.max(20, 35 - Math.abs(diff) * 0.6);
-        const rawAway = 100 - rawHome - rawDraw;
+        const rawAway = Math.max(5, 100 - rawHome - rawDraw);
         const total = rawHome + rawDraw + rawAway;
-        const hPct = Math.round(rawHome / total * 100);
-        const dPct = Math.round(rawDraw / total * 100);
-        const aPct = 100 - hPct - dPct;
+        const hPct = Math.max(5, Math.round(rawHome / total * 100));
+        const dPct = Math.max(5, Math.round(rawDraw / total * 100));
+        const aPct = Math.max(5, 100 - hPct - dPct);
 
         // Direction comment
         let comment = '';
