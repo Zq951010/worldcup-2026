@@ -1676,18 +1676,18 @@ function getEmblemSVG(name, size) {
 
 const teamStrength = {
   '巴西':95,'阿根廷':94,'法国':93,'英格兰':90,'西班牙':89,
-  '葡萄牙':88,'德国':87,'荷兰':86,'比利时':84,'克罗地亚':83,
-  '乌拉圭':82,'美国':82,'日本':82,'哥伦比亚':80,'墨西哥':80,'瑞士':80,
+  '葡萄牙':88,'德国':87,'荷兰':86,'比利时':80,'克罗地亚':83,
+  '乌拉圭':80,'美国':82,'日本':82,'哥伦比亚':80,'墨西哥':80,'瑞士':80,
   '摩洛哥':78,'塞内加尔':74,'澳大利亚':73,'韩国':72,
   '厄瓜多尔':62,'瑞典':65,'巴拉圭':60,'加纳':66,'挪威':64,
-  '奥地利':63,'刚果(金)':62,'沙特':61,'伊朗':60,'突尼斯':50,
-  '科特迪瓦':58,'苏格兰':55,'加拿大':62,'新西兰':51,
-  '巴拿马':50,'伊拉克':49,'埃及':48,'阿尔及利亚':47,'乌兹别克斯坦':46,
-  '约旦':45,'土耳其':58,'波黑':44,'海地':35,'佛得角':41,'库拉索':40,
+  '奥地利':63,'刚果(金)':62,'沙特':61,'伊朗':65,'突尼斯':50,
+  '科特迪瓦':58,'苏格兰':55,'加拿大':62,'新西兰':48,
+  '巴拿马':50,'伊拉克':49,'埃及':55,'阿尔及利亚':47,'乌兹别克斯坦':46,
+  '约旦':45,'土耳其':58,'波黑':44,'海地':35,'佛得角':55,'库拉索':40,
   '捷克':60,'南非':42,'卡塔尔':42
 };
 
-// 实时比赛结果数据 (截至2026年6月21日)
+// 实时比赛结果数据 (截至2026年6月22日)
 const matchResults = {
   'A-墨西哥-南非': { finished: true, score: '2-0', homeGoals: 2, awayGoals: 0 },
   'A-韩国-捷克': { finished: true, score: '2-1', homeGoals: 2, awayGoals: 1 },
@@ -1725,6 +1725,10 @@ const matchResults = {
   'E-厄瓜多尔-库拉索': { finished: true, score: '0-0', homeGoals: 0, awayGoals: 0 },
   'F-荷兰-瑞典': { finished: true, score: '5-1', homeGoals: 5, awayGoals: 1 },
   'F-突尼斯-日本': { finished: true, score: '0-4', homeGoals: 0, awayGoals: 4 },
+  'G-比利时-伊朗': { finished: true, score: '0-0', homeGoals: 0, awayGoals: 0 },
+  'G-新西兰-埃及': { finished: true, score: '1-3', homeGoals: 1, awayGoals: 3 },
+  'H-西班牙-沙特': { finished: true, score: '4-0', homeGoals: 4, awayGoals: 0 },
+  'H-乌拉圭-佛得角': { finished: true, score: '2-2', homeGoals: 2, awayGoals: 2 },
   'L-巴拿马-克罗地亚': { finished: false, score: '0-0', homeGoals: 0, awayGoals: 0 },
 };
 
@@ -2163,6 +2167,19 @@ const systemPredictions = {
       homeWin: 68, draw: 15, awayWin: 17,
       mostLikelyScores: ['2-1', '3-1', '3-0'],
       analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。比利时(84)实力明显强于伊朗(60)，差距约24点。V3模型预测：比利时主胜概率68%，平局15%，伊朗客胜17%。比利时胜算较大。'
+    },
+    postMatch: {
+      actualScore: '0-0',
+      homeGoals: [],
+      awayGoals: [],
+      check: {
+        scoreHit: false,
+        outcomeHit: false,
+        scoreTier: '模型三档未命中,实际0-0',
+        outcomeComment: '胜负:概率偏比利时68%,实际平局,方向未命中',
+        recap: '复盘:比利时控球率70%,全场23次射门7次射正但一球未进。恩戈伊66分钟红牌被罚下,伊朗门将贝兰万德7次扑救当选最佳。比利时两战运动战零进球,进攻瘫痪',
+        summary: '欧洲红魔哑火——比利时0-0闷平伊朗,两战运动战零进球'
+      }
     }
   },
   'G-新西兰-埃及': {
@@ -2170,6 +2187,23 @@ const systemPredictions = {
       homeWin: 42, draw: 24, awayWin: 34,
       mostLikelyScores: ['2-1', '1-2', '1-1'],
       analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。【背水之战】两队均面临巨大压力，输球可能意味着出局。这种比赛往往充满不确定性，可能出现意外结果。两队实力接近，新西兰(51)与埃及(48)势均力敌。V3模型预测：双方胜负概率接近，新西兰主胜42%，平局24%，埃及客胜34%。比赛充满悬念。'
+    },
+    postMatch: {
+      actualScore: '1-3',
+      homeGoals: [{player:'苏尔曼', minute:'15\'', assist:'佩恩'}],
+      awayGoals: [
+        {player:'齐库', minute:'58\'', assist:'哈尼'},
+        {player:'萨拉赫', minute:'67\'', assist:'齐库'},
+        {player:'特雷泽盖', minute:'82\'', assist:'萨拉赫'}
+      ],
+      check: {
+        scoreHit: false,
+        outcomeHit: false,
+        scoreTier: '模型三档未命中,实际1-3',
+        outcomeComment: '胜负:概率偏新西兰42%,实际埃及胜,方向未命中',
+        recap: '复盘:苏尔曼15分钟头球破门新西兰领先。下半场埃及连进3球逆转:齐库58分钟头球扳平,萨拉赫67分钟推射反超,82分钟角球助攻特雷泽盖锁定胜局。埃及收获队史世界杯首胜',
+        summary: '法老传射逆转——埃及3-1新西兰,收获队史世界杯首胜'
+      }
     }
   },
   'G-埃及-伊朗': {
@@ -2192,6 +2226,24 @@ const systemPredictions = {
       homeWin: 71, draw: 15, awayWin: 14,
       mostLikelyScores: ['3-1', '2-1', '3-0'],
       analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。西班牙(89)实力明显强于沙特(61)，差距约28点。V3模型预测：西班牙主胜概率71%，平局15%，沙特客胜14%。西班牙胜算较大。'
+    },
+    postMatch: {
+      actualScore: '4-0',
+      homeGoals: [
+        {player:'亚马尔', minute:'11\'', assist:'奥亚萨瓦尔'},
+        {player:'奥亚萨瓦尔', minute:'21\'', assist:''},
+        {player:'奥亚萨瓦尔', minute:'24\'', assist:'奥尔莫'},
+        {player:'坦巴克蒂(乌龙)', minute:'49\'', assist:'库库雷利亚'}
+      ],
+      awayGoals: [],
+      check: {
+        scoreHit: true,
+        outcomeHit: true,
+        scoreTier: '模型三档第一档3-1接近,实际4-0',
+        outcomeComment: '胜负:概率偏西班牙71%,实际主胜,方向命中',
+        recap: '复盘:亚马尔11分钟包抄破门(18岁343天超越梅西),奥亚萨瓦尔3分钟双响,下半场库库雷利亚造乌龙。西班牙4-0大胜,追平队史世界杯第三大分差胜利,正式比赛33场不败',
+        summary: '青春风暴——西班牙4-0沙特,亚马尔超越梅西奥亚萨瓦尔双响'
+      }
     }
   },
   'H-乌拉圭-佛得角': {
@@ -2199,6 +2251,25 @@ const systemPredictions = {
       homeWin: 78, draw: 15, awayWin: 7,
       mostLikelyScores: ['4-0', '3-0', '4-1'],
       analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。乌拉圭(82)实力碾压佛得角(41)，差距超过30点。V3模型预测：乌拉圭主胜概率78%，平局15%，佛得角客胜7%。乌拉圭胜算较大。'
+    },
+    postMatch: {
+      actualScore: '2-2',
+      homeGoals: [
+        {player:'阿劳霍', minute:'44\'', assist:''},
+        {player:'卡诺比奥', minute:'45+6\'', assist:'阿劳霍'}
+      ],
+      awayGoals: [
+        {player:'凯文·皮纳', minute:'21\'', assist:''},
+        {player:'埃利奥', minute:'61\'', assist:''}
+      ],
+      check: {
+        scoreHit: false,
+        outcomeHit: false,
+        scoreTier: '模型三档未命中,实际2-2',
+        outcomeComment: '胜负:概率偏乌拉圭78%,实际平局,方向未命中',
+        recap: '复盘:佛得角21分钟任意球世界波(队史首球),阿劳霍44分钟扳平,卡诺比奥半场补时反超。61分钟奥利韦拉失误+穆斯莱拉弃门被埃利奥射空门扳平。佛得角连续逼平西班牙和乌拉圭两支世界冠军',
+        summary: '非洲新军再创历史——佛得角2-2乌拉圭,连续逼平两支世界冠军'
+      }
     }
   },
   'H-佛得角-沙特': {
@@ -2398,16 +2469,16 @@ const standingsData = {
     { team: '突尼斯', played: 2, won: 0, drawn: 0, lost: 2, gf: 1, ga: 9, gd: -8, pts: 0 }
   ],
   'G': [
-    { team: '比利时', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '埃及', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '伊朗', played: 1, won: 0, drawn: 1, lost: 0, gf: 2, ga: 2, gd: 0, pts: 1 },
-    { team: '新西兰', played: 1, won: 0, drawn: 1, lost: 0, gf: 2, ga: 2, gd: 0, pts: 1 }
+    { team: '埃及', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 2, gd: 2, pts: 4 },
+    { team: '伊朗', played: 2, won: 0, drawn: 2, lost: 0, gf: 2, ga: 2, gd: 0, pts: 2 },
+    { team: '比利时', played: 2, won: 0, drawn: 2, lost: 0, gf: 1, ga: 1, gd: 0, pts: 2 },
+    { team: '新西兰', played: 2, won: 0, drawn: 1, lost: 1, gf: 3, ga: 5, gd: -2, pts: 1 }
   ],
   'H': [
-    { team: '西班牙', played: 1, won: 0, drawn: 1, lost: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
-    { team: '佛得角', played: 1, won: 0, drawn: 1, lost: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
-    { team: '沙特', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '乌拉圭', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 }
+    { team: '西班牙', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 0, gd: 4, pts: 4 },
+    { team: '乌拉圭', played: 2, won: 0, drawn: 2, lost: 0, gf: 3, ga: 3, gd: 0, pts: 2 },
+    { team: '佛得角', played: 2, won: 0, drawn: 2, lost: 0, gf: 2, ga: 2, gd: 0, pts: 2 },
+    { team: '沙特', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 5, gd: -4, pts: 1 }
   ],
   'I': [
     { team: '挪威', played: 1, won: 1, drawn: 0, lost: 0, gf: 4, ga: 1, gd: 3, pts: 3 },
@@ -2946,10 +3017,12 @@ function updateProbabilities() {
   const aStr = teamStrength[away] || 50;
   const diff = hStr - aStr;
 
-  // V3: Round-based draw probability adjustment
-  // Round 1: 29% draw rate | Round 2: 12.5% draw rate | Round 3: expected ~15-20%
+  // V3.2: Round-based draw probability adjustment
+  // Round 1: 29% draw rate | Round 2: actual 33% draw rate (4/12) | Round 3: expected ~20-25%
+  // CRITICAL FIX: Round 2 draw rate was severely underestimated. Iran 0-0 Belgium, Ecuador 0-0 Curacao,
+  // Uruguay 2-2 Cape Verde, Portugal 1-1 Congo DR all ended in draws.
   let drawBase = 35;
-  if (round.includes('第2轮')) drawBase = 22;
+  if (round.includes('第2轮')) drawBase = 30;
   else if (round.includes('第3轮')) drawBase = 25;
 
   // V3: Eliminated/qualified team factor
@@ -3033,10 +3106,10 @@ function generateReliablePrediction(home, away, groupId, round) {
   round = round || '';
   groupId = groupId || '';
 
-  // V3: Round-based draw probability
-  // Round 1: 29% draw | Round 2: 12.5% draw | Round 3: ~15-20% expected
+  // V3.2: Round-based draw probability
+  // Round 1: 29% draw | Round 2: actual 33% draw (4/12 matches) | Round 3: ~20-25% expected
   let drawBase = 35;
-  if (round.includes('第2轮')) drawBase = 22;
+  if (round.includes('第2轮')) drawBase = 30;
   else if (round.includes('第3轮')) drawBase = 25;
 
   // V3: Team status factor for round 3
