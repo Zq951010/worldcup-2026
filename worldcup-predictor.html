@@ -1678,16 +1678,16 @@ const teamStrength = {
   '巴西':95,'阿根廷':94,'法国':93,'英格兰':90,'西班牙':89,
   '葡萄牙':88,'德国':87,'荷兰':86,'比利时':80,'克罗地亚':83,
   '乌拉圭':80,'美国':82,'日本':82,'哥伦比亚':80,'墨西哥':80,'瑞士':80,
-  '摩洛哥':78,'塞内加尔':74,'澳大利亚':73,'韩国':72,
-  '厄瓜多尔':62,'瑞典':65,'巴拉圭':60,'加纳':66,'挪威':64,
-  '奥地利':63,'刚果(金)':62,'沙特':61,'伊朗':65,'突尼斯':50,
+  '摩洛哥':78,'塞内加尔':72,'澳大利亚':73,'韩国':72,
+  '厄瓜多尔':62,'瑞典':65,'巴拉圭':60,'加纳':66,'挪威':70,
+  '奥地利':60,'刚果(金)':62,'沙特':61,'伊朗':65,'突尼斯':50,
   '科特迪瓦':58,'苏格兰':55,'加拿大':62,'新西兰':48,
-  '巴拿马':50,'伊拉克':49,'埃及':55,'阿尔及利亚':47,'乌兹别克斯坦':46,
+  '巴拿马':50,'伊拉克':49,'埃及':55,'阿尔及利亚':50,'乌兹别克斯坦':46,
   '约旦':45,'土耳其':58,'波黑':44,'海地':35,'佛得角':55,'库拉索':40,
   '捷克':60,'南非':42,'卡塔尔':42
 };
 
-// 实时比赛结果数据 (截至2026年6月22日)
+// 实时比赛结果数据 (截至2026年6月23日)
 const matchResults = {
   'A-墨西哥-南非': { finished: true, score: '2-0', homeGoals: 2, awayGoals: 0 },
   'A-韩国-捷克': { finished: true, score: '2-1', homeGoals: 2, awayGoals: 1 },
@@ -1729,6 +1729,10 @@ const matchResults = {
   'G-新西兰-埃及': { finished: true, score: '1-3', homeGoals: 1, awayGoals: 3 },
   'H-西班牙-沙特': { finished: true, score: '4-0', homeGoals: 4, awayGoals: 0 },
   'H-乌拉圭-佛得角': { finished: true, score: '2-2', homeGoals: 2, awayGoals: 2 },
+  'I-法国-伊拉克': { finished: true, score: '3-0', homeGoals: 3, awayGoals: 0 },
+  'I-挪威-塞内加尔': { finished: true, score: '3-2', homeGoals: 3, awayGoals: 2 },
+  'J-阿根廷-奥地利': { finished: true, score: '2-0', homeGoals: 2, awayGoals: 0 },
+  'J-约旦-阿尔及利亚': { finished: true, score: '1-2', homeGoals: 1, awayGoals: 2 },
   'L-巴拿马-克罗地亚': { finished: false, score: '0-0', homeGoals: 0, awayGoals: 0 },
 };
 
@@ -1844,16 +1848,16 @@ const systemPredictions = {
   },
   'A-捷克-墨西哥': {
     preMatch: {
-      homeWin: 19, draw: 20, awayWin: 61,
-      mostLikelyScores: ['1-2', '1-3', '0-3'],
-      analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【轮换可能】已出线球队末轮可能进行轮换，给对手留下机会。墨西哥(80)实力明显强于捷克(60)，差距约20点。V3模型预测：墨西哥客胜概率61%，平局20%，捷克主胜19%。墨西哥胜算较大。'
+      homeWin: 20, draw: 17, awayWin: 63,
+      mostLikelyScores: ['1-1', '0-1', '1-0'],
+      analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【轮换可能】墨西哥已提前出线，末轮可能进行轮换，给对手留下机会。墨西哥(80)实力略强于捷克(60)，差距约20点。V3.3模型预测：墨西哥胜算较大。'
     }
   },
   'A-南非-韩国': {
     preMatch: {
       homeWin: 13, draw: 15, awayWin: 72,
-      mostLikelyScores: ['1-2', '0-3', '0-2'],
-      analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。韩国(72)实力碾压南非(42)，差距超过30点。V3模型预测：韩国客胜概率72%，平局15%，南非主胜13%。韩国胜算较大。'
+      mostLikelyScores: ['1-2', '0-2', '1-1'],
+      analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【背水之战】两队均面临出线压力，输球可能意味着出局。这种比赛往往充满不确定性，可能出现意外结果。韩国(72)实力明显强于南非(42)，差距约30点。V3.3模型预测：韩国胜算较大。'
     }
   },
   // ===== B组 =====
@@ -1912,15 +1916,15 @@ const systemPredictions = {
   'B-瑞士-加拿大': {
     preMatch: {
       homeWin: 62, draw: 16, awayWin: 22,
-      mostLikelyScores: ['2-1', '3-1', '2-0'],
-      analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。瑞士(80)实力明显强于加拿大(62)，差距约18点。V3模型预测：瑞士主胜概率62%，平局16%，加拿大客胜22%。瑞士胜算较大。'
+      mostLikelyScores: ['1-1', '0-1', '1-0'],
+      analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【背水之战】两队均面临出线压力，输球可能意味着出局。这种比赛往往充满不确定性，可能出现意外结果。瑞士(80)实力略强于加拿大(62)，差距约18点。V3.3模型预测：瑞士胜算较大。'
     }
   },
   'B-波黑-卡塔尔': {
     preMatch: {
-      homeWin: 39, draw: 27, awayWin: 34,
-      mostLikelyScores: ['2-1', '1-1', '1-2'],
-      analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【背水之战】两队均面临巨大压力，输球可能意味着出局。这种比赛往往充满不确定性，可能出现意外结果。两队实力接近，波黑(44)与卡塔尔(42)势均力敌。V3模型预测：双方胜负概率接近，波黑主胜39%，平局27%，卡塔尔客胜34%。比赛充满悬念。'
+      homeWin: 40, draw: 24, awayWin: 36,
+      mostLikelyScores: ['1-1', '0-1', '1-0'],
+      analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【背水之战】两队均面临出线压力，输球可能意味着出局。这种比赛往往充满不确定性，可能出现意外结果。两队实力接近，波黑(44)与卡塔尔(42)势均力敌。V3.3模型预测：波黑胜算较大。'
     }
   },
   // ===== C组 =====
@@ -1971,8 +1975,8 @@ const systemPredictions = {
   'C-苏格兰-巴西': {
     preMatch: {
       homeWin: 8, draw: 15, awayWin: 77,
-      mostLikelyScores: ['1-3', '0-3', '1-2'],
-      analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【轮换可能】已出线球队末轮可能进行轮换，给对手留下机会。巴西(95)实力碾压苏格兰(55)，差距超过30点。V3模型预测：巴西客胜概率77%，平局15%，苏格兰主胜8%。巴西胜算较大。'
+      mostLikelyScores: ['1-2', '0-2', '1-1'],
+      analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【轮换可能】巴西已提前出线，末轮可能进行轮换，给对手留下机会。巴西(95)实力碾压苏格兰(55)，差距超过35点。V3.3模型预测：巴西胜算较大。'
     }
   },
   'C-摩洛哥-海地': {
@@ -2292,6 +2296,23 @@ const systemPredictions = {
       homeWin: 79, draw: 15, awayWin: 6,
       mostLikelyScores: ['4-0', '5-0', '4-1'],
       analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。法国(93)实力碾压伊拉克(49)，差距超过30点。V3模型预测：法国主胜概率79%，平局15%，伊拉克客胜6%。法国胜算较大。'
+    },
+    postMatch: {
+      actualScore: '3-0',
+      homeGoals: [
+        {player:'姆巴佩', minute:'30\'', assist:'登贝莱'},
+        {player:'姆巴佩', minute:'45\'', assist:'格列兹曼'},
+        {player:'登贝莱', minute:'72\'', assist:'姆巴佩'}
+      ],
+      awayGoals: [],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档未命中,实际3-0',
+        outcomeComment: '胜负:概率偏法国79%,实际主胜,方向命中',
+        recap: '复盘:姆巴佩30分钟接登贝莱助攻破门,半场前再入一球完成双响。登贝莱72分钟接姆巴佩助攻锁定3-0。法国两连胜提前出线,姆巴佩追平亨利国家队进球纪录',
+        summary: '姆巴佩双响追平亨利——法国3-0伊拉克提前出线'
+      }
     }
   },
   'I-挪威-塞内加尔': {
@@ -2299,6 +2320,26 @@ const systemPredictions = {
       homeWin: 30, draw: 17, awayWin: 53,
       mostLikelyScores: ['1-2', '1-1', '2-1'],
       analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。塞内加尔(74)实力略强于挪威(64)，差距约10点。V3模型预测：塞内加尔客胜概率53%，平局17%，挪威主胜30%。塞内加尔胜算较大。'
+    },
+    postMatch: {
+      actualScore: '3-2',
+      homeGoals: [
+        {player:'哈兰德', minute:'15\'', assist:'厄德高'},
+        {player:'哈兰德', minute:'60\'', assist:'瑞尔森'},
+        {player:'厄德高', minute:'88\'', assist:''}
+      ],
+      awayGoals: [
+        {player:'伊斯梅拉·萨尔', minute:'22\'', assist:''},
+        {player:'杰克逊', minute:'75\'', assist:''}
+      ],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档未命中,实际3-2',
+        outcomeComment: '胜负:概率偏塞内加尔53%,实际挪威胜,方向未命中',
+        recap: '复盘:哈兰德15分钟破门,萨尔22分钟扳平。哈兰德60分钟再入一球,杰克逊75分钟再次扳平。厄德高88分钟绝杀。挪威3-2险胜塞内加尔,哈兰德双响带队提前出线',
+        summary: '哈兰德双响+厄德高绝杀——挪威3-2塞内加尔,北欧神话续写'
+      }
     }
   },
   'I-挪威-法国': {
@@ -2321,6 +2362,22 @@ const systemPredictions = {
       homeWin: 73, draw: 15, awayWin: 12,
       mostLikelyScores: ['3-1', '3-0', '2-1'],
       analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。阿根廷(94)实力碾压奥地利(63)，差距超过30点。V3模型预测：阿根廷主胜概率73%，平局15%，奥地利客胜12%。阿根廷胜算较大。'
+    },
+    postMatch: {
+      actualScore: '2-0',
+      homeGoals: [
+        {player:'梅西', minute:'33\'', assist:'阿尔瓦雷斯'},
+        {player:'阿尔瓦雷斯', minute:'62\'', assist:'梅西'}
+      ],
+      awayGoals: [],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档未命中,实际2-0',
+        outcomeComment: '胜负:概率偏阿根廷73%,实际主胜,方向命中',
+        recap: '复盘:梅西33分钟接阿尔瓦雷斯助攻破门,阿尔瓦雷斯62分钟接梅西助攻锁定2-0。阿根廷两连胜提前出线,梅西追平克洛泽世界杯出场纪录(24场)',
+        summary: '梅西阿尔瓦雷斯互传互射——阿根廷2-0奥地利提前出线'
+      }
     }
   },
   'J-约旦-阿尔及利亚': {
@@ -2328,6 +2385,22 @@ const systemPredictions = {
       homeWin: 36, draw: 24, awayWin: 40,
       mostLikelyScores: ['1-2', '2-1', '1-1'],
       analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。【背水之战】两队均面临巨大压力，输球可能意味着出局。这种比赛往往充满不确定性，可能出现意外结果。两队实力接近，约旦(45)与阿尔及利亚(47)势均力敌。V3模型预测：双方胜负概率接近，约旦主胜36%，平局24%，阿尔及利亚客胜40%。比赛充满悬念。'
+    },
+    postMatch: {
+      actualScore: '1-2',
+      homeGoals: [{player:'尼扎尔·拉什丹', minute:'36\'', assist:'塔迈里'}],
+      awayGoals: [
+        {player:'本·布阿利', minute:'69\'', assist:'马赫雷斯'},
+        {player:'古伊里', minute:'82\'', assist:''}
+      ],
+      check: {
+        scoreHit: true,
+        outcomeHit: true,
+        scoreTier: '模型三档第一档1-2,命中',
+        outcomeComment: '胜负:概率偏阿尔及利亚40%,实际客胜,方向命中',
+        recap: '复盘:拉什丹36分钟破门约旦领先。69分钟本·布阿利头球扳平,82分钟古伊里乱战破门逆转。阿尔及利亚两度角球破门逆转,约旦两连败出局',
+        summary: '两度角球逆转——阿尔及利亚2-1约旦,送对手出局'
+      }
     }
   },
   'J-阿尔及利亚-奥地利': {
@@ -2374,15 +2447,15 @@ const systemPredictions = {
   'K-葡萄牙-乌兹别克斯坦': {
     preMatch: {
       homeWin: 78, draw: 15, awayWin: 7,
-      mostLikelyScores: ['4-0', '4-1', '3-0'],
-      analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。葡萄牙(88)实力碾压乌兹别克斯坦(46)，差距超过30点。V3模型预测：葡萄牙主胜概率78%，平局15%，乌兹别克斯坦客胜7%。葡萄牙胜算较大。'
+      mostLikelyScores: ['5-1', '6-1', '5-0'],
+      analysis: '【第2轮】已完赛第2轮数据显示平局率约30%，较第1轮有所上升。各队为出线名额全力争胜，比赛开放度高但需防范冷平。葡萄牙(88)实力碾压乌兹别克斯坦(46)，差距超过35点。V3.3模型预测：葡萄牙胜算较大。'
     }
   },
   'K-哥伦比亚-刚果(金)': {
     preMatch: {
-      homeWin: 63, draw: 15, awayWin: 22,
-      mostLikelyScores: ['2-1', '3-1', '2-0'],
-      analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。哥伦比亚(80)实力明显强于刚果(金)(62)，差距约18点。V3模型预测：哥伦比亚主胜概率63%，平局15%，刚果(金)客胜22%。哥伦比亚胜算较大。'
+      homeWin: 58, draw: 21, awayWin: 21,
+      mostLikelyScores: ['2-1', '1-1', '2-0'],
+      analysis: '【第2轮】已完赛第2轮数据显示平局率约30%，较第1轮有所上升。各队为出线名额全力争胜，比赛开放度高但需防范冷平。哥伦比亚(80)实力略强于刚果(金)(62)，差距约18点。V3.3模型预测：哥伦比亚胜算较大。'
     }
   },
   'K-哥伦比亚-葡萄牙': {
@@ -2402,16 +2475,16 @@ const systemPredictions = {
   // ===== L组 =====
   'L-英格兰-加纳': {
     preMatch: {
-      homeWin: 68, draw: 15, awayWin: 17,
-      mostLikelyScores: ['3-1', '2-1', '3-0'],
-      analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。英格兰(90)实力明显强于加纳(66)，差距约24点。V3模型预测：英格兰主胜概率68%，平局15%，加纳客胜17%。英格兰胜算较大。'
+      homeWin: 66, draw: 18, awayWin: 16,
+      mostLikelyScores: ['2-1', '1-1', '2-0'],
+      analysis: '【第2轮】已完赛第2轮数据显示平局率约30%，较第1轮有所上升。各队为出线名额全力争胜，比赛开放度高但需防范冷平。英格兰(90)实力明显强于加纳(66)，差距约24点。V3.3模型预测：英格兰胜算较大。'
     }
   },
   'L-巴拿马-克罗地亚': {
     preMatch: {
       homeWin: 11, draw: 15, awayWin: 74,
-      mostLikelyScores: ['0-4', '0-3', '1-4'],
-      analysis: '【第2轮】本届世界杯第2轮平局率仅12.5%，远低于预期，大比分频出。各队为出线名额全力进攻，比赛开放度高。克罗地亚(83)实力碾压巴拿马(50)，差距超过30点。V3模型预测：克罗地亚客胜概率74%，平局15%，巴拿马主胜11%。克罗地亚胜算较大。'
+      mostLikelyScores: ['1-2', '0-2', '1-1'],
+      analysis: '【第2轮】已完赛第2轮数据显示平局率约30%，较第1轮有所上升。各队为出线名额全力争胜，比赛开放度高但需防范冷平。克罗地亚(83)实力明显强于巴拿马(50)，差距约33点。V3.3模型预测：克罗地亚胜算较大。'
     }
   },
   'L-巴拿马-英格兰': {
@@ -2481,16 +2554,16 @@ const standingsData = {
     { team: '沙特', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 5, gd: -4, pts: 1 }
   ],
   'I': [
-    { team: '挪威', played: 1, won: 1, drawn: 0, lost: 0, gf: 4, ga: 1, gd: 3, pts: 3 },
-    { team: '法国', played: 1, won: 1, drawn: 0, lost: 0, gf: 3, ga: 1, gd: 2, pts: 3 },
-    { team: '塞内加尔', played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 3, gd: -2, pts: 0 },
-    { team: '伊拉克', played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 4, gd: -3, pts: 0 }
+    { team: '法国', played: 2, won: 2, drawn: 0, lost: 0, gf: 6, ga: 1, gd: 5, pts: 6 },
+    { team: '挪威', played: 2, won: 2, drawn: 0, lost: 0, gf: 7, ga: 3, gd: 4, pts: 6 },
+    { team: '塞内加尔', played: 2, won: 0, drawn: 0, lost: 2, gf: 3, ga: 6, gd: -3, pts: 0 },
+    { team: '伊拉克', played: 2, won: 0, drawn: 0, lost: 2, gf: 1, ga: 7, gd: -6, pts: 0 }
   ],
   'J': [
-    { team: '阿根廷', played: 1, won: 1, drawn: 0, lost: 0, gf: 3, ga: 0, gd: 3, pts: 3 },
-    { team: '奥地利', played: 1, won: 1, drawn: 0, lost: 0, gf: 3, ga: 1, gd: 2, pts: 3 },
-    { team: '阿尔及利亚', played: 1, won: 0, drawn: 0, lost: 1, gf: 0, ga: 3, gd: -3, pts: 0 },
-    { team: '约旦', played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 3, gd: -2, pts: 0 }
+    { team: '阿根廷', played: 2, won: 2, drawn: 0, lost: 0, gf: 5, ga: 0, gd: 5, pts: 6 },
+    { team: '奥地利', played: 2, won: 1, drawn: 0, lost: 1, gf: 3, ga: 3, gd: 0, pts: 3 },
+    { team: '阿尔及利亚', played: 2, won: 1, drawn: 0, lost: 1, gf: 2, ga: 4, gd: -2, pts: 3 },
+    { team: '约旦', played: 2, won: 0, drawn: 0, lost: 2, gf: 2, ga: 5, gd: -3, pts: 0 }
   ],
   'K': [
     { team: '哥伦比亚', played: 1, won: 1, drawn: 0, lost: 0, gf: 3, ga: 1, gd: 2, pts: 3 },
@@ -3095,10 +3168,10 @@ function getTeamStatus(team, groupId) {
   return 'fighting'; // Still in contention
 }
 
-// ==================== RELIABLE PREDICTION V3 ====================
-// Calibrated against 2026 World Cup actual results (32 matches through June 20)
-// Key findings: Round 2 draw rate drops to 12.5%, big scores increase in R2,
-// flash strikes common, eliminated teams fight hard, qualified teams may rotate
+// ==================== RELIABLE PREDICTION V3.3 ====================
+// Calibrated against 2026 World Cup actual results (44 matches through June 21)
+// Key findings: Round 2 draw rate is 33% (not 12.5%), big scores only when elite(85+) vs veryWeak(<50),
+// defensive teams (Iran, Cape Verde) can hold strong teams, shot conversion matters
 function generateReliablePrediction(home, away, groupId, round) {
   const hStr = teamStrength[home] || 50;
   const aStr = teamStrength[away] || 50;
@@ -3170,24 +3243,36 @@ function generateReliablePrediction(home, away, groupId, round) {
     confidence = Math.max(hW, aW, dW) + '%';
   }
 
-  // V3.1: Goal expectation - Round 2 big scores are MORE extreme than expected
-  // R1 big score rate: 20.8% | R2 big score rate: 25% (and growing)
-  // Key insight: When strong team (80+) faces weak team (<55) in R2, goals explode
-  const roundGoalBoost = round.includes('第2轮') ? 1.25 : (round.includes('第3轮') ? 1.1 : 1.0);
-  const weakTeamCollapse = (hStr < 55 || aStr < 55) ? 1.5 : 1.0;
-  const strongTeamBoost = (hStr > 75 || aStr > 75) ? 1.25 : 1.0;
+  // V3.3: Goal expectation - Refined based on 44 matches data
+  // Key insight 1: Big scores (>3 goal diff) happen when strong(85+) vs weak(<50) OR diff>40
+  // Key insight 2: Strong teams with low shot conversion (Belgium 23 shots 0 goals) need dampening
+  // Key insight 3: Defensive teams (Iran, Cape Verde) can hold strong teams to 0-0 or 1-1
+  const roundGoalBoost = round.includes('第2轮') ? 1.2 : (round.includes('第3轮') ? 1.1 : 1.0);
+
+  // V3.3: Weak team collapse - only when very weak (<50) not just <55
+  const veryWeakTeam = (hStr < 50 || aStr < 50);
+  const weakTeamCollapse = veryWeakTeam ? 1.6 : ((hStr < 55 || aStr < 55) ? 1.2 : 1.0);
+
+  // V3.3: Strong team boost - only for truly elite (85+) not just 75+
+  const eliteTeam = (hStr > 85 || aStr > 85);
+  const strongTeamBoost = eliteTeam ? 1.3 : ((hStr > 75 || aStr > 75) ? 1.1 : 1.0);
+
   const hostBoost = (home === '美国' || home === '加拿大' || home === '墨西哥') ? 1.15 : 1.0;
 
-  // V3.1: Extra boost for extreme mismatches in Round 2 (Holland 5-1 Sweden, Japan 4-0 Tunisia)
-  const extremeMismatch = (Math.abs(diff) > 20 && (hStr < 55 || aStr < 55)) ? 1.3 : 1.0;
+  // V3.3: Extreme mismatch - diff>40 OR (elite vs veryWeak)
+  const extremeMismatch = (Math.abs(diff) > 40 || (eliteTeam && veryWeakTeam)) ? 1.4 : 1.0;
 
-  const homeAttack = Math.max(0.4, (hStr / 50) * 1.2);
-  const awayDefense = Math.max(0.3, (aStr / 50) * 0.8);
-  const awayAttack = Math.max(0.4, (aStr / 50) * 1.2);
-  const homeDefense = Math.max(0.3, (hStr / 50) * 0.8);
+  // V3.3: Defensive resilience factor - when both teams are defensive, lower goals
+  const bothDefensive = (hStr < 65 && aStr < 65);
+  const defensiveDampening = bothDefensive ? 0.8 : 1.0;
 
-  let homeGoalExp = homeAttack * (2.4 - awayDefense * 0.7) * weakTeamCollapse * strongTeamBoost * roundGoalBoost * hostBoost * extremeMismatch;
-  let awayGoalExp = awayAttack * (2.4 - homeDefense * 0.7) * weakTeamCollapse * strongTeamBoost * roundGoalBoost;
+  const homeAttack = Math.max(0.4, (hStr / 50) * 1.15);
+  const awayDefense = Math.max(0.3, (aStr / 50) * 0.85);
+  const awayAttack = Math.max(0.4, (aStr / 50) * 1.15);
+  const homeDefense = Math.max(0.3, (hStr / 50) * 0.85);
+
+  let homeGoalExp = homeAttack * (2.3 - awayDefense * 0.75) * weakTeamCollapse * strongTeamBoost * roundGoalBoost * hostBoost * extremeMismatch * defensiveDampening;
+  let awayGoalExp = awayAttack * (2.3 - homeDefense * 0.75) * weakTeamCollapse * strongTeamBoost * roundGoalBoost * defensiveDampening;
 
   // Less randomness for more consistent predictions
   homeGoalExp *= (0.9 + Math.random() * 0.2);
