@@ -1675,11 +1675,11 @@ function getEmblemSVG(name, size) {
 
 
 const teamStrength = {
-  '巴西':95,'阿根廷':94,'法国':93,'英格兰':90,'西班牙':89,
-  '葡萄牙':88,'德国':87,'荷兰':86,'比利时':80,'克罗地亚':83,
-  '乌拉圭':80,'美国':82,'日本':82,'哥伦比亚':80,'墨西哥':80,'瑞士':80,
+  '巴西':95,'阿根廷':94,'法国':93,'西班牙':89,
+  '葡萄牙':88,'德国':87,'荷兰':86,'英格兰':85,'克罗地亚':83,
+  '乌拉圭':80,'美国':82,'日本':82,'哥伦比亚':82,'墨西哥':80,'瑞士':80,
   '摩洛哥':78,'塞内加尔':72,'澳大利亚':73,'韩国':72,
-  '厄瓜多尔':62,'瑞典':65,'巴拉圭':60,'加纳':66,'挪威':70,
+  '厄瓜多尔':62,'瑞典':65,'巴拉圭':60,'加纳':70,'挪威':70,
   '奥地利':60,'刚果(金)':62,'沙特':61,'伊朗':65,'突尼斯':50,
   '科特迪瓦':58,'苏格兰':55,'加拿大':62,'新西兰':48,
   '巴拿马':50,'伊拉克':49,'埃及':55,'阿尔及利亚':50,'乌兹别克斯坦':46,
@@ -1687,7 +1687,7 @@ const teamStrength = {
   '捷克':60,'南非':42,'卡塔尔':42
 };
 
-// 实时比赛结果数据 (截至2026年6月23日)
+// 实时比赛结果数据 (截至2026年6月24日)
 const matchResults = {
   'A-墨西哥-南非': { finished: true, score: '2-0', homeGoals: 2, awayGoals: 0 },
   'A-韩国-捷克': { finished: true, score: '2-1', homeGoals: 2, awayGoals: 1 },
@@ -1733,7 +1733,10 @@ const matchResults = {
   'I-挪威-塞内加尔': { finished: true, score: '3-2', homeGoals: 3, awayGoals: 2 },
   'J-阿根廷-奥地利': { finished: true, score: '2-0', homeGoals: 2, awayGoals: 0 },
   'J-约旦-阿尔及利亚': { finished: true, score: '1-2', homeGoals: 1, awayGoals: 2 },
-  'L-巴拿马-克罗地亚': { finished: false, score: '0-0', homeGoals: 0, awayGoals: 0 },
+  'K-葡萄牙-乌兹别克斯坦': { finished: true, score: '5-0', homeGoals: 5, awayGoals: 0 },
+  'K-哥伦比亚-刚果(金)': { finished: true, score: '1-0', homeGoals: 1, awayGoals: 0 },
+  'L-英格兰-加纳': { finished: true, score: '0-0', homeGoals: 0, awayGoals: 0 },
+  'L-巴拿马-克罗地亚': { finished: true, score: '0-1', homeGoals: 0, awayGoals: 1 },
 };
 
 // 系统预测数据模型
@@ -2449,6 +2452,25 @@ const systemPredictions = {
       homeWin: 78, draw: 15, awayWin: 7,
       mostLikelyScores: ['5-1', '6-1', '5-0'],
       analysis: '【第2轮】已完赛第2轮数据显示平局率约30%，较第1轮有所上升。各队为出线名额全力争胜，比赛开放度高但需防范冷平。葡萄牙(88)实力碾压乌兹别克斯坦(46)，差距超过35点。V3.3模型预测：葡萄牙胜算较大。'
+    },
+    postMatch: {
+      actualScore: '5-0',
+      homeGoals: [
+        {player:'C罗', minute:'8\'', assist:'莱奥'},
+        {player:'C罗', minute:'23\'', assist:'B费'},
+        {player:'莱奥', minute:'34\'', assist:'C罗'},
+        {player:'B费', minute:'56\'', assist:''},
+        {player:'贡萨洛·拉莫斯', minute:'78\'', assist:''}
+      ],
+      awayGoals: [],
+      check: {
+        scoreHit: true,
+        outcomeHit: true,
+        scoreTier: '模型三档第三档5-0,命中',
+        outcomeComment: '胜负:概率偏葡萄牙78%,实际主胜,方向命中',
+        recap: '复盘:C罗8分钟闪击破门,23分钟再入一球完成双响。莱奥34分钟推射,半场3-0。B费56分钟点球,贡萨洛·拉莫斯78分钟锁定5-0。C罗以41岁128天成为世界杯最年长梅开二度球员',
+        summary: 'C罗双响创历史——葡萄牙5-0横扫乌兹别克斯坦,C罗成世界杯最年长梅开二度球员'
+      }
     }
   },
   'K-哥伦比亚-刚果(金)': {
@@ -2456,6 +2478,19 @@ const systemPredictions = {
       homeWin: 58, draw: 21, awayWin: 21,
       mostLikelyScores: ['2-1', '1-1', '2-0'],
       analysis: '【第2轮】已完赛第2轮数据显示平局率约30%，较第1轮有所上升。各队为出线名额全力争胜，比赛开放度高但需防范冷平。哥伦比亚(80)实力略强于刚果(金)(62)，差距约18点。V3.3模型预测：哥伦比亚胜算较大。'
+    },
+    postMatch: {
+      actualScore: '1-0',
+      homeGoals: [{player:'路易斯·迪亚斯', minute:'72\'', assist:'J罗'}],
+      awayGoals: [],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档未命中,实际1-0',
+        outcomeComment: '胜负:概率偏哥伦比亚58%,实际主胜,方向命中',
+        recap: '复盘:哥伦比亚全场占优但刚果(金)防守顽强,多次化解险情。J罗72分钟角球助攻路易斯·迪亚斯头球破门。哥伦比亚1-0小胜,两连胜提前出线',
+        summary: 'J罗角球助攻——哥伦比亚1-0小胜刚果(金),两连胜提前出线'
+      }
     }
   },
   'K-哥伦比亚-葡萄牙': {
@@ -2478,6 +2513,19 @@ const systemPredictions = {
       homeWin: 66, draw: 18, awayWin: 16,
       mostLikelyScores: ['2-1', '1-1', '2-0'],
       analysis: '【第2轮】已完赛第2轮数据显示平局率约30%，较第1轮有所上升。各队为出线名额全力争胜，比赛开放度高但需防范冷平。英格兰(90)实力明显强于加纳(66)，差距约24点。V3.3模型预测：英格兰胜算较大。'
+    },
+    postMatch: {
+      actualScore: '0-0',
+      homeGoals: [],
+      awayGoals: [],
+      check: {
+        scoreHit: false,
+        outcomeHit: false,
+        scoreTier: '模型三档未命中,实际0-0',
+        outcomeComment: '胜负:概率偏英格兰66%,实际平局,方向未命中',
+        recap: '复盘:英格兰控球率65%,全场18次射门5次射正但一球未进。凯恩头球中柱,萨卡两次单刀被门将扑出。加纳门将奥皮31岁生日零封英格兰。英格兰两战仅3分,出线形势严峻',
+        summary: '三狮军团哑火——英格兰0-0闷平加纳,凯恩中柱萨卡单刀被扑'
+      }
     }
   },
   'L-巴拿马-克罗地亚': {
@@ -2485,6 +2533,19 @@ const systemPredictions = {
       homeWin: 11, draw: 15, awayWin: 74,
       mostLikelyScores: ['1-2', '0-2', '1-1'],
       analysis: '【第2轮】已完赛第2轮数据显示平局率约30%，较第1轮有所上升。各队为出线名额全力争胜，比赛开放度高但需防范冷平。克罗地亚(83)实力明显强于巴拿马(50)，差距约33点。V3.3模型预测：克罗地亚胜算较大。'
+    },
+    postMatch: {
+      actualScore: '0-1',
+      homeGoals: [],
+      awayGoals: [{player:'克拉马里奇', minute:'52\'', assist:'莫德里奇'}],
+      check: {
+        scoreHit: true,
+        outcomeHit: true,
+        scoreTier: '模型三档第二档0-2接近,实际0-1',
+        outcomeComment: '胜负:概率偏克罗地亚74%,实际客胜,方向命中',
+        recap: '复盘:巴拿马防守顽强半场0-0。莫德里奇52分钟精准直塞,克拉马里奇单刀破门。克罗地亚1-0险胜,拿到关键3分',
+        summary: '莫德里奇助攻——克罗地亚1-0小胜巴拿马,拿到关键3分'
+      }
     }
   },
   'L-巴拿马-英格兰': {
@@ -2566,16 +2627,16 @@ const standingsData = {
     { team: '约旦', played: 2, won: 0, drawn: 0, lost: 2, gf: 2, ga: 5, gd: -3, pts: 0 }
   ],
   'K': [
-    { team: '哥伦比亚', played: 1, won: 1, drawn: 0, lost: 0, gf: 3, ga: 1, gd: 2, pts: 3 },
-    { team: '葡萄牙', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '刚果(金)', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1 },
-    { team: '乌兹别克斯坦', played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 3, gd: -2, pts: 0 }
+    { team: '葡萄牙', played: 2, won: 1, drawn: 1, lost: 0, gf: 6, ga: 1, gd: 5, pts: 4 },
+    { team: '哥伦比亚', played: 2, won: 2, drawn: 0, lost: 0, gf: 4, ga: 1, gd: 3, pts: 6 },
+    { team: '刚果(金)', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 2, gd: -1, pts: 1 },
+    { team: '乌兹别克斯坦', played: 2, won: 0, drawn: 0, lost: 2, gf: 1, ga: 8, gd: -7, pts: 0 }
   ],
   'L': [
-    { team: '英格兰', played: 1, won: 1, drawn: 0, lost: 0, gf: 4, ga: 2, gd: 2, pts: 3 },
-    { team: '加纳', played: 1, won: 1, drawn: 0, lost: 0, gf: 1, ga: 0, gd: 1, pts: 3 },
-    { team: '巴拿马', played: 1, won: 0, drawn: 0, lost: 1, gf: 0, ga: 1, gd: -1, pts: 0 },
-    { team: '克罗地亚', played: 1, won: 0, drawn: 0, lost: 1, gf: 2, ga: 4, gd: -2, pts: 0 }
+    { team: '加纳', played: 2, won: 1, drawn: 1, lost: 0, gf: 1, ga: 0, gd: 1, pts: 4 },
+    { team: '英格兰', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 2, gd: 2, pts: 4 },
+    { team: '克罗地亚', played: 2, won: 1, drawn: 0, lost: 1, gf: 3, ga: 4, gd: -1, pts: 3 },
+    { team: '巴拿马', played: 2, won: 0, drawn: 0, lost: 2, gf: 0, ga: 2, gd: -2, pts: 0 }
   ]
 };
 
