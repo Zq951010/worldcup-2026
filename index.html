@@ -1677,17 +1677,17 @@ function getEmblemSVG(name, size) {
 const teamStrength = {
   '巴西':95,'阿根廷':94,'法国':93,'西班牙':89,
   '葡萄牙':88,'德国':87,'荷兰':86,'英格兰':85,'克罗地亚':83,
-  '乌拉圭':80,'美国':82,'日本':82,'哥伦比亚':82,'墨西哥':80,'瑞士':80,
-  '摩洛哥':78,'塞内加尔':72,'澳大利亚':73,'韩国':72,
+  '乌拉圭':80,'美国':82,'日本':82,'哥伦比亚':82,'墨西哥':85,'瑞士':82,
+  '摩洛哥':80,'塞内加尔':72,'澳大利亚':73,'韩国':68,
   '厄瓜多尔':62,'瑞典':65,'巴拉圭':60,'加纳':70,'挪威':70,
   '奥地利':60,'刚果(金)':62,'沙特':61,'伊朗':65,'突尼斯':50,
-  '科特迪瓦':58,'苏格兰':55,'加拿大':62,'新西兰':48,
+  '科特迪瓦':58,'苏格兰':52,'加拿大':65,'新西兰':48,
   '巴拿马':50,'伊拉克':49,'埃及':55,'阿尔及利亚':50,'乌兹别克斯坦':46,
-  '约旦':45,'土耳其':58,'波黑':44,'海地':35,'佛得角':55,'库拉索':40,
-  '捷克':60,'南非':42,'卡塔尔':42
+  '约旦':45,'土耳其':58,'波黑':52,'海地':38,'佛得角':55,'库拉索':40,
+  '捷克':55,'南非':48,'卡塔尔':42
 };
 
-// 实时比赛结果数据 (截至2026年6月24日)
+// 实时比赛结果数据 (截至2026年6月25日)
 const matchResults = {
   'A-墨西哥-南非': { finished: true, score: '2-0', homeGoals: 2, awayGoals: 0 },
   'A-韩国-捷克': { finished: true, score: '2-1', homeGoals: 2, awayGoals: 1 },
@@ -1737,6 +1737,12 @@ const matchResults = {
   'K-哥伦比亚-刚果(金)': { finished: true, score: '1-0', homeGoals: 1, awayGoals: 0 },
   'L-英格兰-加纳': { finished: true, score: '0-0', homeGoals: 0, awayGoals: 0 },
   'L-巴拿马-克罗地亚': { finished: true, score: '0-1', homeGoals: 0, awayGoals: 1 },
+  'A-捷克-墨西哥': { finished: true, score: '0-3', homeGoals: 0, awayGoals: 3 },
+  'A-南非-韩国': { finished: true, score: '1-0', homeGoals: 1, awayGoals: 0 },
+  'B-瑞士-加拿大': { finished: true, score: '2-1', homeGoals: 2, awayGoals: 1 },
+  'B-波黑-卡塔尔': { finished: true, score: '3-1', homeGoals: 3, awayGoals: 1 },
+  'C-苏格兰-巴西': { finished: true, score: '0-3', homeGoals: 0, awayGoals: 3 },
+  'C-摩洛哥-海地': { finished: true, score: '4-2', homeGoals: 4, awayGoals: 2 },
 };
 
 // 系统预测数据模型
@@ -2567,22 +2573,22 @@ const systemPredictions = {
 // 实时积分榜数据
 const standingsData = {
   'A': [
-    { team: '墨西哥', played: 2, won: 2, drawn: 0, lost: 0, gf: 3, ga: 0, gd: 3, pts: 6 },
-    { team: '韩国', played: 2, won: 1, drawn: 0, lost: 1, gf: 2, ga: 2, gd: 0, pts: 3 },
-    { team: '捷克', played: 2, won: 0, drawn: 1, lost: 1, gf: 2, ga: 3, gd: -1, pts: 1 },
-    { team: '南非', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 3, gd: -2, pts: 1 }
+    { team: '墨西哥', played: 3, won: 3, drawn: 0, lost: 0, gf: 6, ga: 0, gd: 6, pts: 9 },
+    { team: '南非', played: 3, won: 1, drawn: 1, lost: 1, gf: 2, ga: 3, gd: -1, pts: 4 },
+    { team: '韩国', played: 3, won: 1, drawn: 0, lost: 2, gf: 2, ga: 3, gd: -1, pts: 3 },
+    { team: '捷克', played: 3, won: 0, drawn: 1, lost: 2, gf: 2, ga: 6, gd: -4, pts: 1 }
   ],
   'B': [
-    { team: '瑞士', played: 2, won: 1, drawn: 1, lost: 0, gf: 5, ga: 2, gd: 3, pts: 4 },
-    { team: '加拿大', played: 2, won: 1, drawn: 1, lost: 0, gf: 7, ga: 1, gd: 6, pts: 4 },
-    { team: '波黑', played: 2, won: 0, drawn: 1, lost: 1, gf: 2, ga: 5, gd: -3, pts: 1 },
-    { team: '卡塔尔', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 7, gd: -6, pts: 1 }
+    { team: '瑞士', played: 3, won: 2, drawn: 1, lost: 0, gf: 7, ga: 3, gd: 4, pts: 7 },
+    { team: '加拿大', played: 3, won: 1, drawn: 1, lost: 1, gf: 7, ga: 2, gd: 5, pts: 4 },
+    { team: '波黑', played: 3, won: 1, drawn: 1, lost: 1, gf: 5, ga: 6, gd: -1, pts: 4 },
+    { team: '卡塔尔', played: 3, won: 0, drawn: 1, lost: 2, gf: 2, ga: 10, gd: -8, pts: 1 }
   ],
   'C': [
-    { team: '巴西', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 1, gd: 3, pts: 4 },
-    { team: '摩洛哥', played: 2, won: 1, drawn: 1, lost: 0, gf: 2, ga: 1, gd: 1, pts: 4 },
-    { team: '苏格兰', played: 2, won: 1, drawn: 0, lost: 1, gf: 1, ga: 1, gd: 0, pts: 3 },
-    { team: '海地', played: 2, won: 0, drawn: 0, lost: 2, gf: 0, ga: 4, gd: -4, pts: 0 }
+    { team: '巴西', played: 3, won: 2, drawn: 1, lost: 0, gf: 7, ga: 1, gd: 6, pts: 7 },
+    { team: '摩洛哥', played: 3, won: 2, drawn: 1, lost: 0, gf: 6, ga: 3, gd: 3, pts: 7 },
+    { team: '苏格兰', played: 3, won: 1, drawn: 0, lost: 2, gf: 1, ga: 4, gd: -3, pts: 3 },
+    { team: '海地', played: 3, won: 0, drawn: 0, lost: 3, gf: 2, ga: 8, gd: -6, pts: 0 }
   ],
   'D': [
     { team: '美国', played: 2, won: 2, drawn: 0, lost: 0, gf: 6, ga: 1, gd: 5, pts: 6 },
