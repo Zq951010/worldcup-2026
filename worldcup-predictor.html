@@ -1860,6 +1860,23 @@ const systemPredictions = {
       homeWin: 20, draw: 17, awayWin: 63,
       mostLikelyScores: ['1-1', '0-1', '1-0'],
       analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【轮换可能】墨西哥已提前出线，末轮可能进行轮换，给对手留下机会。墨西哥(80)实力略强于捷克(60)，差距约20点。V3.3模型预测：墨西哥胜算较大。'
+    },
+    postMatch: {
+      actualScore: '0-3',
+      homeGoals: [],
+      awayGoals: [
+        {player:'查韦斯', minute:'55\'', assist:''},
+        {player:'基尼奥内斯', minute:'68\'', assist:''},
+        {player:'费达尔戈', minute:'81\'', assist:''}
+      ],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档未命中,实际0-3',
+        outcomeComment: '胜负:概率偏墨西哥63%,实际客胜,方向命中',
+        recap: '复盘:墨西哥下半场火力全开,查韦斯55分钟推射,基尼奥内斯68分钟补射,费达尔戈81分钟锁定3-0。墨西哥三战全胜零失球完美出线,捷克三战1平2负出局',
+        summary: '下半场三连击——墨西哥3-0捷克,三战全胜零失球完美出线'
+      }
     }
   },
   'A-南非-韩国': {
@@ -1867,6 +1884,19 @@ const systemPredictions = {
       homeWin: 13, draw: 15, awayWin: 72,
       mostLikelyScores: ['1-2', '0-2', '1-1'],
       analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【背水之战】两队均面临出线压力，输球可能意味着出局。这种比赛往往充满不确定性，可能出现意外结果。韩国(72)实力明显强于南非(42)，差距约30点。V3.3模型预测：韩国胜算较大。'
+    },
+    postMatch: {
+      actualScore: '1-0',
+      homeGoals: [{player:'马约', minute:'55\'', assist:'塔乌'}],
+      awayGoals: [],
+      check: {
+        scoreHit: false,
+        outcomeHit: false,
+        scoreTier: '模型三档未命中,实际1-0',
+        outcomeComment: '胜负:概率偏韩国72%,实际南非胜,方向未命中',
+        recap: '复盘:韩国打平即可出线但全场进攻乏力,孙兴慜、李刚仁多次射门被化解。马约55分钟头球破门南非1-0领先,韩国此后狂攻无果。南非奇迹般小组第二出线,韩国打平即出线却惨遭淘汰',
+        summary: '打平即出线的魔咒——南非1-0韩国,亚洲一哥爆冷出局'
+      }
     }
   },
   // ===== B组 =====
@@ -1927,6 +1957,22 @@ const systemPredictions = {
       homeWin: 62, draw: 16, awayWin: 22,
       mostLikelyScores: ['1-1', '0-1', '1-0'],
       analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【背水之战】两队均面临出线压力，输球可能意味着出局。这种比赛往往充满不确定性，可能出现意外结果。瑞士(80)实力略强于加拿大(62)，差距约18点。V3.3模型预测：瑞士胜算较大。'
+    },
+    postMatch: {
+      actualScore: '2-1',
+      homeGoals: [
+        {player:'恩博洛', minute:'12\'', assist:'阿坎吉'},
+        {player:'弗罗伊勒', minute:'45+2\'', assist:'恩博洛'}
+      ],
+      awayGoals: [{player:'乔纳森·戴维', minute:'68\'', assist:'阿方索·戴维斯'}],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档未命中,实际2-1',
+        outcomeComment: '胜负:概率偏瑞士62%,实际主胜,方向命中',
+        recap: '复盘:恩博洛12分钟破门,弗罗伊勒半场补时扩大2-0。乔纳森·戴维68分钟扳回一球,但加拿大此后未能扳平。瑞士2-1击败东道主,7分小组第一出线',
+        summary: '恩博洛破门弗罗伊勒建功——瑞士2-1加拿大,力压东道主小组第一出线'
+      }
     }
   },
   'B-波黑-卡塔尔': {
@@ -1934,6 +1980,23 @@ const systemPredictions = {
       homeWin: 40, draw: 24, awayWin: 36,
       mostLikelyScores: ['1-1', '0-1', '1-0'],
       analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【背水之战】两队均面临出线压力，输球可能意味着出局。这种比赛往往充满不确定性，可能出现意外结果。两队实力接近，波黑(44)与卡塔尔(42)势均力敌。V3.3模型预测：波黑胜算较大。'
+    },
+    postMatch: {
+      actualScore: '3-1',
+      homeGoals: [
+        {player:'德米罗维奇', minute:'23\'', assist:''},
+        {player:'哈伊拉迪诺维奇', minute:'45\'', assist:'哲科'},
+        {player:'哲科', minute:'78\'', assist:''}
+      ],
+      awayGoals: [{player:'阿菲夫', minute:'55\'', assist:'阿里'}],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档未命中,实际3-1',
+        outcomeComment: '胜负:概率偏波黑40%,实际主胜,方向命中',
+        recap: '复盘:德米罗维奇23分钟破门,哈伊拉迪诺维奇半场前扩大2-0。阿菲夫55分钟扳回一球,但哲科78分钟锁定3-1。波黑荣誉战大胜,卡塔尔三战1平2负垫底出局',
+        summary: '荣誉战爆发——波黑3-1卡塔尔,哲科78分钟锁定胜局'
+      }
     }
   },
   // ===== C组 =====
@@ -1986,6 +2049,23 @@ const systemPredictions = {
       homeWin: 8, draw: 15, awayWin: 77,
       mostLikelyScores: ['1-2', '0-2', '1-1'],
       analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。【轮换可能】巴西已提前出线，末轮可能进行轮换，给对手留下机会。巴西(95)实力碾压苏格兰(55)，差距超过35点。V3.3模型预测：巴西胜算较大。'
+    },
+    postMatch: {
+      actualScore: '0-3',
+      homeGoals: [],
+      awayGoals: [
+        {player:'库尼亚', minute:'12\'', assist:'维尼修斯'},
+        {player:'罗德里戈', minute:'34\'', assist:'库尼亚'},
+        {player:'恩德里克', minute:'72\'', assist:'罗德里戈'}
+      ],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档未命中,实际0-3',
+        outcomeComment: '胜负:概率偏巴西77%,实际客胜,方向命中',
+        recap: '复盘:即使大幅轮换,巴西替补阵容仍碾压苏格兰。库尼亚12分钟闪击,罗德里戈34分钟扩大,恩德里克72分钟锁定3-0。苏格兰三战1胜2负出局',
+        summary: '轮换仍碾压——巴西3-0苏格兰,替补阵容展现恐怖深度'
+      }
     }
   },
   'C-摩洛哥-海地': {
@@ -1993,6 +2073,27 @@ const systemPredictions = {
       homeWin: 78, draw: 15, awayWin: 7,
       mostLikelyScores: ['3-0', '4-0', '3-1'],
       analysis: '【第3轮·出线决战】末轮比赛出线形势决定比赛走向，已出线球队可能轮换，生死战球队背水一战。摩洛哥(78)实力碾压海地(35)，差距超过30点。V3模型预测：摩洛哥主胜概率78%，平局15%，海地客胜7%。摩洛哥胜算较大。'
+    },
+    postMatch: {
+      actualScore: '4-2',
+      homeGoals: [
+        {player:'阿什拉夫', minute:'15\'', assist:''},
+        {player:'齐耶赫', minute:'23\'', assist:''},
+        {player:'阿姆拉巴特', minute:'45+1\'', assist:''},
+        {player:'恩内斯里', minute:'67\'', assist:''}
+      ],
+      awayGoals: [
+        {player:'皮埃罗', minute:'55\'', assist:''},
+        {player:'德科', minute:'82\'', assist:''}
+      ],
+      check: {
+        scoreHit: false,
+        outcomeHit: true,
+        scoreTier: '模型三档未命中,实际4-2',
+        outcomeComment: '胜负:概率偏摩洛哥78%,实际主胜,方向命中',
+        recap: '复盘:阿什拉夫15分钟世界波,齐耶赫23分钟任意球,阿姆拉巴特半场补时扩大3-0。海地55分钟由皮埃罗扳回一球,恩内斯里67分钟4-1,德科82分钟再入一球。摩洛哥两胜一平7分小组第二出线,海地三连败出局',
+        summary: '海地虽败犹荣——摩洛哥4-2海地,双方联手奉献进球大战'
+      }
     }
   },
   // ===== D组 =====
