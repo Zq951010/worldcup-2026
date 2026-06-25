@@ -3228,17 +3228,23 @@ function getTeamStatus(team, groupId) {
   if (!standings) return 'unknown';
   const s = standings.find(x => x.team === team);
   if (!s) return 'unknown';
-  // Round 3 status based on points
+  // Round 3 status based on points and table position
+  const sorted = [...standings].sort((a, b) => b.pts - a.pts || b.gd - a.gd);
+  const rank = sorted.findIndex(x => x.team === team) + 1;
+  
   if (s.pts >= 4 && s.won >= 1) return 'qualified'; // Already qualified
   if (s.pts === 0 && s.lost >= 2) return 'eliminated'; // Eliminated
   if (s.pts <= 1 && s.lost >= 1) return 'needWin'; // Must win
+  // V3.5 NEW: "Draw to qualify" - team with 3-4 pts in 2nd/3rd place needing draw
+  if ((s.pts === 3 || s.pts === 4) && (rank === 2 || rank === 3)) return 'needDraw';
   return 'fighting'; // Still in contention
 }
 
-// ==================== RELIABLE PREDICTION V3.4 ====================
+// ==================== RELIABLE PREDICTION V3.5 ====================
 // Calibrated against 2026 World Cup actual results (60 matches through June 25)
-// Key findings: Round 3 draw rate is only 8% (1/12), big score rate 41.7% in R3,
-// "draw to qualify" trap causes upsets, host nations perform above expectations
+// Key findings: Round 3 draw rate only 8% (1/12), big score rate 41.7% in R3,
+// eliminated teams still score (Haiti 2, Qatar 1), "draw to qualify" trap (Korea 0-1 SA),
+// qualified teams rotating may concede more (Morocco 4-2 Haiti, conceded 2)
 function generateReliablePrediction(home, away, groupId, round) {
   const hStr = teamStrength[home] || 50;
   const aStr = teamStrength[away] || 50;
@@ -3310,36 +3316,52 @@ function generateReliablePrediction(home, away, groupId, round) {
     confidence = Math.max(hW, aW, dW) + '%';
   }
 
-  // V3.3: Goal expectation - Refined based on 44 matches data
-  // Key insight 1: Big scores (>3 goal diff) happen when strong(85+) vs weak(<50) OR diff>40
-  // Key insight 2: Strong teams with low shot conversion (Belgium 23 shots 0 goals) need dampening
-  // Key insight 3: Defensive teams (Iran, Cape Verde) can hold strong teams to 0-0 or 1-1
-  const roundGoalBoost = round.includes('第2轮') ? 1.2 : (round.includes('第3轮') ? 1.3 : 1.0);
+  // V3.5: Goal expectation - Refined based on 60 matches data
+  // Key insight 1: Round 3 big score rate 41.7% (5/12), draw rate only 8.3% (1/12)
+  // Key insight 2: Eliminated teams still score (Haiti 2 vs Morocco, Qatar 1 vs Bosnia)
+  // Key insight 3: Qualified teams rotating may concede (Morocco 4-2 Haiti, conceded 2)
+  // Key insight 4: "Draw to qualify" pressure causes upsets (Korea 0-1 South Africa)
+  const roundGoalBoost = round.includes('第2轮') ? 1.2 : (round.includes('第3轮') ? 1.35 : 1.0);
 
-  // V3.3: Weak team collapse - only when very weak (<50) not just <55
+  // V3.5: Weak team collapse - only when very weak (<50) not just <55
   const veryWeakTeam = (hStr < 50 || aStr < 50);
   const weakTeamCollapse = veryWeakTeam ? 1.6 : ((hStr < 55 || aStr < 55) ? 1.2 : 1.0);
 
-  // V3.3: Strong team boost - only for truly elite (85+) not just 75+
+  // V3.5: Strong team boost - only for truly elite (85+) not just 75+
   const eliteTeam = (hStr > 85 || aStr > 85);
   const strongTeamBoost = eliteTeam ? 1.3 : ((hStr > 75 || aStr > 75) ? 1.1 : 1.0);
 
   const hostBoost = (home === '美国' || home === '加拿大' || home === '墨西哥') ? 1.15 : 1.0;
 
-  // V3.3: Extreme mismatch - diff>40 OR (elite vs veryWeak)
+  // V3.5: Extreme mismatch - diff>40 OR (elite vs veryWeak)
   const extremeMismatch = (Math.abs(diff) > 40 || (eliteTeam && veryWeakTeam)) ? 1.4 : 1.0;
 
-  // V3.3: Defensive resilience factor - when both teams are defensive, lower goals
+  // V3.5: Defensive resilience factor - when both teams are defensive, lower goals
   const bothDefensive = (hStr < 65 && aStr < 65);
   const defensiveDampening = bothDefensive ? 0.8 : 1.0;
+
+  // V3.5 NEW: Eliminated team honor fight - eliminated teams still score! (Haiti 2, Qatar 1)
+  const homeEliminated = getTeamStatus(home, groupId) === 'eliminated';
+  const awayEliminated = getTeamStatus(away, groupId) === 'eliminated';
+  const honorFightBoost = (homeEliminated || awayEliminated) ? 1.15 : 1.0;
+
+  // V3.5 NEW: Qualified team rotation defense drop - conceded more when qualified (Morocco 2, Mexico 0 but...)
+  const homeQualified = getTeamStatus(home, groupId) === 'qualified';
+  const awayQualified = getTeamStatus(away, groupId) === 'qualified';
+  const rotationDefenseDrop = (homeQualified || awayQualified) ? 1.2 : 1.0;
+
+  // V3.5 NEW: "Draw to qualify" pressure factor - teams needing just a draw often lose (Korea 0-1 SA)
+  const homeNeedDraw = getTeamStatus(home, groupId) === 'needDraw';
+  const awayNeedDraw = getTeamStatus(away, groupId) === 'needDraw';
+  const pressureFactor = (homeNeedDraw || awayNeedDraw) ? 0.9 : 1.0;
 
   const homeAttack = Math.max(0.4, (hStr / 50) * 1.15);
   const awayDefense = Math.max(0.3, (aStr / 50) * 0.85);
   const awayAttack = Math.max(0.4, (aStr / 50) * 1.15);
   const homeDefense = Math.max(0.3, (hStr / 50) * 0.85);
 
-  let homeGoalExp = homeAttack * (2.3 - awayDefense * 0.75) * weakTeamCollapse * strongTeamBoost * roundGoalBoost * hostBoost * extremeMismatch * defensiveDampening;
-  let awayGoalExp = awayAttack * (2.3 - homeDefense * 0.75) * weakTeamCollapse * strongTeamBoost * roundGoalBoost * defensiveDampening;
+  let homeGoalExp = homeAttack * (2.3 - awayDefense * 0.75) * weakTeamCollapse * strongTeamBoost * roundGoalBoost * hostBoost * extremeMismatch * defensiveDampening * honorFightBoost * pressureFactor;
+  let awayGoalExp = awayAttack * (2.3 - homeDefense * 0.75) * weakTeamCollapse * strongTeamBoost * roundGoalBoost * defensiveDampening * rotationDefenseDrop * pressureFactor;
 
   // Less randomness for more consistent predictions
   homeGoalExp *= (0.9 + Math.random() * 0.2);
