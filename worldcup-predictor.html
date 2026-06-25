@@ -3157,13 +3157,13 @@ function updateProbabilities() {
   const aStr = teamStrength[away] || 50;
   const diff = hStr - aStr;
 
-  // V3.2: Round-based draw probability adjustment
-  // Round 1: 29% draw rate | Round 2: actual 33% draw rate (4/12) | Round 3: expected ~20-25%
-  // CRITICAL FIX: Round 2 draw rate was severely underestimated. Iran 0-0 Belgium, Ecuador 0-0 Curacao,
-  // Uruguay 2-2 Cape Verde, Portugal 1-1 Congo DR all ended in draws.
+  // V3.4: Round-based draw probability adjustment
+  // Round 1: 29% draw rate (7/24) | Round 2: 29% draw rate (7/24) | Round 3: 8% draw rate (1/12)
+  // CRITICAL: Round 3 draw rate is extremely low! Teams fight for survival, big scores common.
+  // "Draw to qualify" trap: Korea lost 0-1 to South Africa when a draw would have sufficed.
   let drawBase = 35;
   if (round.includes('第2轮')) drawBase = 30;
-  else if (round.includes('第3轮')) drawBase = 25;
+  else if (round.includes('第3轮')) drawBase = 15;
 
   // V3: Eliminated/qualified team factor
   const homeStatus = getTeamStatus(home, selectedMatch.groupId);
@@ -3235,10 +3235,10 @@ function getTeamStatus(team, groupId) {
   return 'fighting'; // Still in contention
 }
 
-// ==================== RELIABLE PREDICTION V3.3 ====================
-// Calibrated against 2026 World Cup actual results (44 matches through June 21)
-// Key findings: Round 2 draw rate is 33% (not 12.5%), big scores only when elite(85+) vs veryWeak(<50),
-// defensive teams (Iran, Cape Verde) can hold strong teams, shot conversion matters
+// ==================== RELIABLE PREDICTION V3.4 ====================
+// Calibrated against 2026 World Cup actual results (60 matches through June 25)
+// Key findings: Round 3 draw rate is only 8% (1/12), big score rate 41.7% in R3,
+// "draw to qualify" trap causes upsets, host nations perform above expectations
 function generateReliablePrediction(home, away, groupId, round) {
   const hStr = teamStrength[home] || 50;
   const aStr = teamStrength[away] || 50;
@@ -3246,11 +3246,11 @@ function generateReliablePrediction(home, away, groupId, round) {
   round = round || '';
   groupId = groupId || '';
 
-  // V3.2: Round-based draw probability
-  // Round 1: 29% draw | Round 2: actual 33% draw (4/12 matches) | Round 3: ~20-25% expected
+  // V3.4: Round-based draw probability
+  // Round 1: 29% draw | Round 2: 29% draw (7/24) | Round 3: 8% draw (1/12)
   let drawBase = 35;
   if (round.includes('第2轮')) drawBase = 30;
-  else if (round.includes('第3轮')) drawBase = 25;
+  else if (round.includes('第3轮')) drawBase = 15;
 
   // V3: Team status factor for round 3
   let statusFactor = 0;
@@ -3314,7 +3314,7 @@ function generateReliablePrediction(home, away, groupId, round) {
   // Key insight 1: Big scores (>3 goal diff) happen when strong(85+) vs weak(<50) OR diff>40
   // Key insight 2: Strong teams with low shot conversion (Belgium 23 shots 0 goals) need dampening
   // Key insight 3: Defensive teams (Iran, Cape Verde) can hold strong teams to 0-0 or 1-1
-  const roundGoalBoost = round.includes('第2轮') ? 1.2 : (round.includes('第3轮') ? 1.1 : 1.0);
+  const roundGoalBoost = round.includes('第2轮') ? 1.2 : (round.includes('第3轮') ? 1.3 : 1.0);
 
   // V3.3: Weak team collapse - only when very weak (<50) not just <55
   const veryWeakTeam = (hStr < 50 || aStr < 50);
