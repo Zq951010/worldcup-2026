@@ -1759,6 +1759,17 @@ const matchResults = {
   'H-佛得角-沙特': { finished: true, score: '0-0', homeGoals: 0, awayGoals: 0 },
   'I-法国-挪威': { finished: true, score: '4-1', homeGoals: 4, awayGoals: 1 },
   'I-塞内加尔-伊拉克': { finished: true, score: '5-0', homeGoals: 5, awayGoals: 0 },
+  // J组第3轮
+  'J-约旦-阿根廷': { finished: true, score: '1-3', homeGoals: 1, awayGoals: 3 },
+  'J-阿尔及利亚-奥地利': { finished: true, score: '3-3', homeGoals: 3, awayGoals: 3 },
+  // K组第3轮
+  'K-哥伦比亚-葡萄牙': { finished: true, score: '0-0', homeGoals: 0, awayGoals: 0 },
+  'K-刚果(金)-乌兹别克斯坦': { finished: true, score: '3-1', homeGoals: 3, awayGoals: 1 },
+  // L组第3轮
+  'L-巴拿马-英格兰': { finished: true, score: '0-2', homeGoals: 0, awayGoals: 2 },
+  'L-加纳-克罗地亚': { finished: true, score: '1-2', homeGoals: 1, awayGoals: 2 },
+  // 1/16决赛（Round of 32）
+  'M73-南非-加拿大': { finished: true, score: '0-1', homeGoals: 0, awayGoals: 1 },
 };
 
 // 系统预测数据模型
@@ -2866,6 +2877,145 @@ const systemPredictions = {
       homeWin: 55, draw: 12, awayWin: 33,
       mostLikelyScores: ['2-1', '1-0', '2-0'],
       analysis: '【第3轮·A-F组18场数据+盘口】平局3场(16.7%)。【竞彩盘口】克罗地亚主让1球(1.57/3.08/5.95)，支持率克罗地亚71% vs 加纳13%，超级大热门！【必须赢vs不败即出线】克罗地亚3分必须赢球才能出线！加纳4分不败即出线。【关键数据】克罗地亚1-0巴拿马，但4-2英格兰防线漏洞大。加纳1-0巴拿马/0-0英格兰，防守惊人。【盘口信号】1.57超低赔+71%支持率，机构对克罗地亚信心爆棚。让1球盘说明认为克罗地亚至少赢1球。V3.5+盘口综合：克罗地亚主胜55%(大幅上调)，平局12%，加纳客胜33%(下调)。推荐比分2-1/1-0/2-0。'
+    },
+    postMatch: {
+      actualScore: '2-1',
+      homeGoals: [{player:'弗拉西奇', minute:'72\''}, {player:'莫德里奇', minute:'89\''}],
+      awayGoals: [{player:'库杜斯', minute:'45\''}],
+      check: {
+        scoreHit: true,
+        outcomeHit: true,
+        scoreTier: '模型三档2-1命中',
+        outcomeComment: '胜负:概率偏克罗地亚55%,实际主胜,方向命中',
+        recap: '复盘:克罗地亚2-1逆转加纳！莫德里奇89分钟绝杀。克罗地亚L2出线将对阵葡萄牙。',
+        summary: '莫德里奇绝杀！克罗地亚2-1逆转加纳携手出线'
+      }
+    }
+  },
+  // ===== 1/16决赛 (Round of 32) =====
+  'M73-南非-加拿大': {
+    preMatch: {
+      homeWin: 20, draw: 25, awayWin: 55,
+      mostLikelyScores: ['0-1', '0-2', '1-1'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！加拿大东道主+主场优势，FIFA第35位。南非A组第二，FIFA第57位，首次晋级淘汰赛。【盘口】加拿大客胜1.66，让球(+1)负2.00，机构看好加拿大小胜。【关键】加拿大小组赛6-0卡塔尔展现攻击力，南非防守尚可但进攻乏力。淘汰赛双方都会保守，但加拿大有主场优势必须拿下。推荐比分0-1/0-2/1-1。'
+    },
+    postMatch: {
+      actualScore: '0-1',
+      homeGoals: [],
+      awayGoals: [{player:'欧斯塔基奥', minute:'92\''}],
+      check: {
+        scoreHit: true,
+        outcomeHit: true,
+        scoreTier: '模型三档0-1命中',
+        outcomeComment: '胜负:概率偏加拿大55%,实际客胜,方向命中',
+        recap: '复盘:欧斯塔基奥92分钟绝杀！加拿大1-0南非，队史首次晋级16强。淘汰赛首战即演绝杀好戏。',
+        summary: '欧斯塔基奥绝杀！加拿大1-0南非首进16强'
+      }
+    }
+  },
+  'M74-巴西-日本': {
+    preMatch: {
+      homeWin: 65, draw: 20, awayWin: 15,
+      mostLikelyScores: ['2-1', '2-0', '1-1'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！巴西C组第一(2胜1平)，FIFA第5，内马尔/维尼修斯领衔。日本F组第二(1胜2平)，FIFA第15，镰田大地/三笘薰领衔。【盘口】巴西主胜1.66，让球(-1)胜3.07，机构看好巴西但不看好大胜。【关键】日本淘汰赛从未赢过，心理劣势明显。巴西进攻火力强(7球/3场)但防守有漏洞。淘汰赛巴西会全力输出，日本防守反击。推荐比分2-1/2-0/1-1。'
+    }
+  },
+  'M75-德国-巴拉圭': {
+    preMatch: {
+      homeWin: 85, draw: 10, awayWin: 5,
+      mostLikelyScores: ['3-0', '2-0', '4-1'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！德国E组第一(2胜1负)，3场进10球火力全开。巴拉圭D组第三(4分-3GD)，1-0土耳其是唯一亮点。【盘口】德国主胜1.35，全场最低之一，机构极度看好德国。【关键】德国7-1库拉索展现恐怖攻击力，末轮虽爆冷输厄瓜多尔但已出线。淘汰赛德国上全主力+全力输出。巴拉圭实力差距太大。推荐比分3-0/2-0/4-1。'
+    }
+  },
+  'M76-荷兰-摩洛哥': {
+    preMatch: {
+      homeWin: 50, draw: 30, awayWin: 20,
+      mostLikelyScores: ['1-1', '2-1', '1-0'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！荷兰F组第一(2胜1平)，3场进10球。摩洛哥C组第二(2胜1平)，3场进6球。【盘口】荷兰主胜1.89，让球(-1)胜3.82，机构不看好荷兰大胜。【关键】两队实力最接近的一场淘汰赛！荷兰5-1瑞典但1-3突尼斯暴露防线问题。摩洛哥4-2海地攻击力不容小觑。双方都会谨慎，可能拖入加时。推荐比分1-1/2-1/1-0。'
+    }
+  },
+  'M77-科特迪瓦-挪威': {
+    preMatch: {
+      homeWin: 25, draw: 30, awayWin: 45,
+      mostLikelyScores: ['1-2', '1-1', '0-1'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！科特迪瓦E组第二(2胜1负)，首次晋级。挪威I组第二(2胜1负)，哈兰德领衔。【盘口】挪威客胜2.03略占优，但差距极小。【关键】两队实力极为接近，淘汰赛单场决胜随机性大。挪威末轮1-4惨败法国暴露后防问题，哈兰德状态成疑。科特迪瓦身体对抗强，首次晋级士气旺盛。推荐比分1-2/1-1/0-1。'
+    }
+  },
+  'M78-法国-瑞典': {
+    preMatch: {
+      homeWin: 90, draw: 5, awayWin: 5,
+      mostLikelyScores: ['3-1', '2-0', '4-1'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！法国I组全胜(9分)，3场进10球失2球，状态爆表。瑞典F组第三(4分0GD)，5-1突尼斯但1-5惨败荷兰。【盘口】法国主胜1.28全场最低，碾压级优势。【关键】姆巴佩状态火热，登贝莱/格列兹曼配合默契。瑞典防线面对法国攻击群难以招架。法国让球应在2球以上。推荐比分3-1/2-0/4-1。'
+    }
+  },
+  'M79-墨西哥-厄瓜多尔': {
+    preMatch: {
+      homeWin: 55, draw: 25, awayWin: 20,
+      mostLikelyScores: ['1-0', '1-1', '2-1'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！墨西哥A组全胜(9分)，3场进6球零失球！厄瓜多尔E组第三(4分)，末轮2-1逆转德国震惊世界。【盘口】墨西哥主胜2.15，不算很低——厄瓜多尔不是鱼腩。【关键】墨西哥主场(墨西哥城)作战有地理优势，防守本届最强(零失球)。厄瓜多尔士气正旺但淘汰赛经验不足。墨西哥控制节奏为主。推荐比分1-0/1-1/2-1。'
+    }
+  },
+  'M80-英格兰-刚果(金)': {
+    preMatch: {
+      homeWin: 88, draw: 7, awayWin: 5,
+      mostLikelyScores: ['3-0', '2-0', '4-1'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！英格兰L组第一(7分)，凯恩/贝林厄姆领衔。刚果(金)K组第三(4分)，末轮3-1逆转乌兹别克。【盘口】英格兰主胜1.27全场最低之一，碾压级优势。【关键】英格兰破密集防守效率低(0-0加纳)，但刚果(金)防线不稳(3场丢3球)。淘汰赛英格兰上全主力，凯恩+萨卡+贝林厄姆火力全开。推荐比分3-0/2-0/4-1。'
+    }
+  },
+  'M81-比利时-塞内加尔': {
+    preMatch: {
+      homeWin: 60, draw: 25, awayWin: 15,
+      mostLikelyScores: ['2-1', '1-1', '2-0'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！比利时G组第一(1胜2平)，末轮5-1新西兰。塞内加尔I组第三(3分)，末轮5-0伊拉克。【盘口】比利时主胜约1.60，实力占优但非碾压。【关键】比利时整体实力更稳，德布劳内/卢卡库状态回升。塞内加尔5-0大胜士气正旺，但小组赛也有0-2科特迪瓦、1-4挪威的败绩。双方都不弱，比赛有悬念。推荐比分2-1/1-1/2-0。'
+    }
+  },
+  'M82-美国-波黑': {
+    preMatch: {
+      homeWin: 70, draw: 15, awayWin: 15,
+      mostLikelyScores: ['2-1', '1-0', '2-0'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！美国D组第一(2胜1负)，末轮2-3被土耳其绝杀但已出线。波黑B组第三(4分)，3-1卡塔尔。【盘口】美国主胜约1.37，实力明显占优。【关键】美国主场(西雅图)作战，末轮绝杀不影响士气。波黑有进攻能力(5球/3场)但防守不稳(6球/3场)。美国进攻火力强(8球/3场)。推荐比分2-1/1-0/2-0。'
+    }
+  },
+  'M83-葡萄牙-克罗地亚': {
+    preMatch: {
+      homeWin: 50, draw: 30, awayWin: 20,
+      mostLikelyScores: ['1-1', '2-1', '1-0'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！葡萄牙K组第二(1胜2平)，C罗/B费领衔。克罗地亚L组第二(2胜1负)，莫德里奇领衔。【盘口】葡萄牙主胜约1.90，仅略占优。平赔3.27偏低，平局概率不低。【关键】欧洲内战！两队打法相似(传控+经验)，节奏偏慢。克罗地亚2-1绝杀加纳士气正旺。葡萄牙小组赛3场仅1胜，状态一般。这场比赛最可能胶着，拖入加时/点球不意外。推荐比分1-1/2-1/1-0。'
+    }
+  },
+  'M84-西班牙-奥地利': {
+    preMatch: {
+      homeWin: 82, draw: 12, awayWin: 6,
+      mostLikelyScores: ['2-0', '1-0', '3-0'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！西班牙H组第一(2胜1平)，3场零失球！奥地利J组第二(4分)，末轮3-3阿尔及利亚防线不稳。【盘口】西班牙主胜约1.30，碾压级优势。【关键】西班牙防守本届最强(3场0丢球)，罗德里/佩德里中场控制力顶级。奥地利伤病多+防线不稳，面对西班牙传控难以招架。西班牙不会大开大合，控制节奏小胜。推荐比分2-0/1-0/3-0。'
+    }
+  },
+  'M85-澳大利亚-埃及': {
+    preMatch: {
+      homeWin: 25, draw: 35, awayWin: 40,
+      mostLikelyScores: ['1-1', '0-1', '1-2'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！澳大利亚D组第二(4分)，埃及G组第二(5分)。【盘口】平赔约2.91为最低，机构认为平局概率最高。【关键】两队实力极为接近！澳大利亚3场仅进1球(进攻最弱之一)，但防守极稳。埃及萨拉赫状态好，3-1新西兰展现攻击力。澳大利亚进攻乏力但防守韧性足，可能拖入加时。推荐比分1-1/0-1/1-2。'
+    }
+  },
+  'M86-阿根廷-佛得角': {
+    preMatch: {
+      homeWin: 95, draw: 4, awayWin: 1,
+      mostLikelyScores: ['2-0', '3-0', '1-0'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！阿根廷J组全胜(9分)，梅西领衔。佛得角H组第二(3场3平)，3连平晋级，3场0进球！【盘口】阿根廷主胜约1.15，全场最低，碾压级优势。【关键】佛得角进攻极其乏力(3场0进球)，面对阿根廷零失球防线几乎不可能进球。梅西淘汰赛必定首发+全力输出。阿根廷不会过度进攻，稳健小胜即可。推荐比分2-0/3-0/1-0。'
+    }
+  },
+  'M87-哥伦比亚-加纳': {
+    preMatch: {
+      homeWin: 60, draw: 25, awayWin: 15,
+      mostLikelyScores: ['1-0', '2-1', '0-0'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！哥伦比亚K组第一(7分)，J罗/迪亚斯领衔。加纳L组第三(4分)，防守极强(2场零失球)。【盘口】哥伦比亚主胜约1.81，明显占优但非碾压。【关键】双方防守都是顶级！哥伦比亚3场仅失1球，加纳3场仅失2球。这场比赛小球概率极高，哥伦比亚靠个人能力打破僵局。推荐比分1-0/2-1/0-0。'
+    }
+  },
+  'M88-瑞士-阿尔及利亚': {
+    preMatch: {
+      homeWin: 55, draw: 28, awayWin: 17,
+      mostLikelyScores: ['2-1', '1-1', '1-0'],
+      analysis: '【淘汰赛·单场决胜】输球即回家！瑞士B组第一(7分)，巴尔加斯领衔。阿尔及利亚J组第三(4分)，末轮3-3奥地利展现攻击力。【盘口】瑞士主胜约1.60，实力占优但差距不大。【关键】瑞士小组赛2-1加拿大、4-1波黑，攻击力稳定。阿尔及利亚马赫雷斯领衔，3-3那场展示极强进攻欲望。瑞士防守更稳，但阿尔及利亚有爆点能力。推荐比分2-1/1-1/1-0。'
     }
   }
 };
@@ -2927,22 +3077,22 @@ const standingsData = {
     { team: '伊拉克', played: 3, won: 0, drawn: 0, lost: 3, gf: 1, ga: 12, gd: -11, pts: 0 }
   ],
   'J': [
-    { team: '阿根廷', played: 2, won: 2, drawn: 0, lost: 0, gf: 5, ga: 0, gd: 5, pts: 6 },
-    { team: '奥地利', played: 2, won: 1, drawn: 0, lost: 1, gf: 3, ga: 3, gd: 0, pts: 3 },
-    { team: '阿尔及利亚', played: 2, won: 1, drawn: 0, lost: 1, gf: 2, ga: 4, gd: -2, pts: 3 },
-    { team: '约旦', played: 2, won: 0, drawn: 0, lost: 2, gf: 2, ga: 5, gd: -3, pts: 0 }
+    { team: '阿根廷', played: 3, won: 3, drawn: 0, lost: 0, gf: 9, ga: 1, gd: 8, pts: 9 },
+    { team: '奥地利', played: 3, won: 1, drawn: 1, lost: 1, gf: 6, ga: 6, gd: 0, pts: 4 },
+    { team: '阿尔及利亚', played: 3, won: 1, drawn: 1, lost: 1, gf: 5, ga: 7, gd: -2, pts: 4 },
+    { team: '约旦', played: 3, won: 0, drawn: 0, lost: 3, gf: 3, ga: 9, gd: -6, pts: 0 }
   ],
   'K': [
-    { team: '葡萄牙', played: 2, won: 1, drawn: 1, lost: 0, gf: 6, ga: 1, gd: 5, pts: 4 },
-    { team: '哥伦比亚', played: 2, won: 2, drawn: 0, lost: 0, gf: 4, ga: 1, gd: 3, pts: 6 },
-    { team: '刚果(金)', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 2, gd: -1, pts: 1 },
-    { team: '乌兹别克斯坦', played: 2, won: 0, drawn: 0, lost: 2, gf: 1, ga: 8, gd: -7, pts: 0 }
+    { team: '哥伦比亚', played: 3, won: 2, drawn: 1, lost: 0, gf: 4, ga: 1, gd: 3, pts: 7 },
+    { team: '葡萄牙', played: 3, won: 1, drawn: 2, lost: 0, gf: 6, ga: 1, gd: 5, pts: 5 },
+    { team: '刚果(金)', played: 3, won: 1, drawn: 1, lost: 1, gf: 4, ga: 3, gd: 1, pts: 4 },
+    { team: '乌兹别克斯坦', played: 3, won: 0, drawn: 0, lost: 3, gf: 2, ga: 11, gd: -9, pts: 0 }
   ],
   'L': [
-    { team: '加纳', played: 2, won: 1, drawn: 1, lost: 0, gf: 1, ga: 0, gd: 1, pts: 4 },
-    { team: '英格兰', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 2, gd: 2, pts: 4 },
-    { team: '克罗地亚', played: 2, won: 1, drawn: 0, lost: 1, gf: 3, ga: 4, gd: -1, pts: 3 },
-    { team: '巴拿马', played: 2, won: 0, drawn: 0, lost: 2, gf: 0, ga: 2, gd: -2, pts: 0 }
+    { team: '英格兰', played: 3, won: 2, drawn: 1, lost: 0, gf: 6, ga: 2, gd: 4, pts: 7 },
+    { team: '克罗地亚', played: 3, won: 2, drawn: 0, lost: 1, gf: 5, ga: 5, gd: 0, pts: 6 },
+    { team: '加纳', played: 3, won: 1, drawn: 1, lost: 1, gf: 2, ga: 2, gd: 0, pts: 4 },
+    { team: '巴拿马', played: 3, won: 0, drawn: 0, lost: 3, gf: 0, ga: 5, gd: -5, pts: 0 }
   ]
 };
 
@@ -3055,6 +3205,26 @@ const groups = [
       {home:'巴拿马',away:'英格兰',date:'6月27日',time:'05:00',round:'第3轮',stadium:'大都会人寿体育场, 新泽西'},
       {home:'克罗地亚',away:'加纳',date:'6月27日',time:'05:00',round:'第3轮',stadium:'AT&T体育场, 阿灵顿'}
     ]}
+];
+
+// ==================== KNOCKOUT MATCHES ====================
+const knockoutMatches = [
+  // 1/16决赛（Round of 32）- M73已完赛
+  { id:'M74', home:'巴西', away:'日本', date:'6月28日', time:'03:00', round:'1/16决赛', stadium:'SoFi体育场, 洛杉矶' },
+  { id:'M75', home:'德国', away:'巴拉圭', date:'6月28日', time:'06:00', round:'1/16决赛', stadium:'AT&T体育场, 阿灵顿' },
+  { id:'M76', home:'荷兰', away:'摩洛哥', date:'6月28日', time:'09:00', round:'1/16决赛', stadium:'大都会人寿体育场, 新泽西' },
+  { id:'M77', home:'科特迪瓦', away:'挪威', date:'6月28日', time:'12:00', round:'1/16决赛', stadium:'BC Place, 温哥华' },
+  { id:'M78', home:'法国', away:'瑞典', date:'6月29日', time:'00:00', round:'1/16决赛', stadium:'硬石体育场, 迈阿密' },
+  { id:'M79', home:'墨西哥', away:'厄瓜多尔', date:'6月29日', time:'03:00', round:'1/16决赛', stadium:'阿兹特克体育场, 墨西哥城' },
+  { id:'M80', home:'英格兰', away:'刚果(金)', date:'6月29日', time:'06:00', round:'1/16决赛', stadium:'洋基体育场, 纽约' },
+  { id:'M81', home:'比利时', away:'塞内加尔', date:'6月29日', time:'09:00', round:'1/16决赛', stadium:'箭头体育场, 堪萨斯城' },
+  { id:'M82', home:'美国', away:'波黑', date:'6月30日', time:'03:00', round:'1/16决赛', stadium:'流明球场, 西雅图' },
+  { id:'M83', home:'葡萄牙', away:'克罗地亚', date:'6月30日', time:'06:00', round:'1/16决赛', stadium:'李维斯体育场, 旧金山' },
+  { id:'M84', home:'西班牙', away:'奥地利', date:'6月30日', time:'09:00', round:'1/16决赛', stadium:'BMO球场, 多伦多' },
+  { id:'M85', home:'澳大利亚', away:'埃及', date:'6月30日', time:'12:00', round:'1/16决赛', stadium:'BBVA体育场, 蒙特雷' },
+  { id:'M86', home:'阿根廷', away:'佛得角', date:'7月1日', time:'03:00', round:'1/16决赛', stadium:'梅赛德斯-奔驰体育场, 亚特兰大' },
+  { id:'M87', home:'哥伦比亚', away:'加纳', date:'7月1日', time:'06:00', round:'1/16决赛', stadium:'吉列体育场, 波士顿' },
+  { id:'M88', home:'瑞士', away:'阿尔及利亚', date:'7月1日', time:'09:00', round:'1/16决赛', stadium:'BBVA体育场, 蒙特雷' }
 ];
 
 // ==================== STATE ====================
@@ -3860,13 +4030,17 @@ function renderDailySchedule() {
   const tabsContainer = document.getElementById('dailyTabs');
   const resultContainer = document.getElementById('dailyScheduleResult');
 
-  // Collect all unique dates
+  // Collect all unique dates (group stage + knockout)
   const dates = new Set();
   groups.forEach(g => g.matches.forEach(m => dates.add(m.date)));
+  knockoutMatches.forEach(m => dates.add(m.date));
   const sortedDates = Array.from(dates).sort((a, b) => {
-    const da = parseInt(a.replace('6月', '').replace('日', ''));
-    const db = parseInt(b.replace('6月', '').replace('日', ''));
-    return da - db;
+    const ma = parseInt(a.replace('6月', '').replace('7月', '').replace('日', ''));
+    const mb = parseInt(b.replace('6月', '').replace('7月', '').replace('日', ''));
+    const monthA = a.includes('7月') ? 7 : 6;
+    const monthB = b.includes('7月') ? 7 : 6;
+    if (monthA !== monthB) return monthA - monthB;
+    return ma - mb;
   });
 
   // Build tabs
@@ -3894,12 +4068,21 @@ function showDailySchedule(date) {
     });
   });
 
+  knockoutMatches.forEach(m => {
+    if (date === 'all' || m.date === date) {
+      matches.push({ ...m, groupId: m.id });
+    }
+  });
+
   // Sort by date then time
   const dateOrder = {};
   const allDates = [...new Set(matches.map(m => m.date))].sort((a, b) => {
-    const da = parseInt(a.replace('6月', '').replace('日', ''));
-    const db = parseInt(b.replace('6月', '').replace('日', ''));
-    return da - db;
+    const ma = parseInt(a.replace('6月', '').replace('7月', '').replace('日', ''));
+    const mb = parseInt(b.replace('6月', '').replace('7月', '').replace('日', ''));
+    const monthA = a.includes('7月') ? 7 : 6;
+    const monthB = b.includes('7月') ? 7 : 6;
+    if (monthA !== monthB) return monthA - monthB;
+    return ma - mb;
   });
   allDates.forEach((d, i) => dateOrder[d] = i);
 
@@ -3925,10 +4108,11 @@ function showDailySchedule(date) {
     const isFinished = result && result.finished;
     const homeFlag = getEmblemSVG(m.home, 20);
     const awayFlag = getEmblemSVG(m.away, 20);
+    const groupLabel = m.round && m.round.includes('决赛') ? m.round : m.groupId;
 
     html += `
       <div class="daily-match-item">
-        <span class="daily-match-group">${m.groupId}</span>
+        <span class="daily-match-group">${groupLabel}</span>
         <div class="daily-match-teams">
           ${homeFlag} ${m.home} vs ${m.away} ${awayFlag}
         </div>
@@ -3952,7 +4136,7 @@ function renderSystemPredictions() {
 function filterPredictionCardsByDate(date) {
   const container = document.getElementById('predictionHistory');
 
-  // Get all matches for the selected date
+  // Get all matches for the selected date (group stage + knockout)
   let allMatches = [];
   groups.forEach(g => {
     g.matches.forEach(m => {
@@ -3961,13 +4145,21 @@ function filterPredictionCardsByDate(date) {
       }
     });
   });
+  knockoutMatches.forEach(m => {
+    if (date === 'all' || m.date === date) {
+      allMatches.push({ ...m, groupId: m.id });
+    }
+  });
 
   // Sort by date and time
   const dateOrder = {};
   const allDates = [...new Set(allMatches.map(m => m.date))].sort((a, b) => {
-    const da = parseInt(a.replace('6月', '').replace('日', ''));
-    const db = parseInt(b.replace('6月', '').replace('日', ''));
-    return da - db;
+    const ma = parseInt(a.replace('6月', '').replace('7月', '').replace('日', ''));
+    const mb = parseInt(b.replace('6月', '').replace('7月', '').replace('日', ''));
+    const monthA = a.includes('7月') ? 7 : 6;
+    const monthB = b.includes('7月') ? 7 : 6;
+    if (monthA !== monthB) return monthA - monthB;
+    return ma - mb;
   });
   allDates.forEach((d, i) => dateOrder[d] = i);
   allMatches.sort((a, b) => {
@@ -4164,7 +4356,7 @@ function filterPredictionCardsByDate(date) {
           <div class="sys-pred-card fade-in-up" onclick="viewSystemPredictionDetail('${resultKey}')" style="cursor:pointer;">
             <div class="sys-pred-header">
               <span class="sys-pred-tag">预测分析</span>
-              <span class="sys-pred-group">${m.groupId}组</span>
+              <span class="sys-pred-group">${m.round && m.round.includes('决赛') ? m.round : m.groupId + '组'}</span>
             </div>
             <div class="sys-pred-teams">
               <div class="sys-pred-team">
@@ -4192,7 +4384,7 @@ function filterPredictionCardsByDate(date) {
           <div class="sys-pred-card fade-in-up upcoming" onclick="viewSystemPredictionDetail('${resultKey}')" style="cursor:pointer;">
             <div class="sys-pred-header">
               <span class="sys-pred-tag" style="background:rgba(100,181,246,0.15);color:var(--blue);">赛前预测</span>
-              <span class="sys-pred-group">${m.groupId}组</span>
+              <span class="sys-pred-group">${m.round && m.round.includes('决赛') ? m.round : m.groupId + '组'}</span>
             </div>
             <div class="sys-pred-teams">
               <div class="sys-pred-team">
@@ -4221,7 +4413,7 @@ function filterPredictionCardsByDate(date) {
         <div class="sys-pred-card fade-in-up" onclick="openPrediction('${m.groupId}','${m.home}','${m.away}','${m.date}','${m.time}','${m.round}','${m.stadium.replace(/'/g, "\\'")}')" style="cursor:pointer;">
           <div class="sys-pred-header">
             <span class="sys-pred-tag" style="background:rgba(255,255,255,0.1);color:var(--muted);">暂无预测</span>
-            <span class="sys-pred-group">${m.groupId}组</span>
+            <span class="sys-pred-group">${m.round && m.round.includes('决赛') ? m.round : m.groupId + '组'}</span>
           </div>
           <div class="sys-pred-teams">
             <div class="sys-pred-team">
@@ -4269,7 +4461,9 @@ function viewSystemPredictionDetail(key) {
   };
 
   const group = groups.find(g => g.id === groupId);
-  document.getElementById('modalRound').textContent = `${group ? group.name : groupId}组 · 预测分析`;
+  const knockoutMatch = knockoutMatches.find(m => m.id === groupId);
+  const roundLabel = knockoutMatch ? knockoutMatch.round : (group ? group.name : groupId + '组');
+  document.getElementById('modalRound').textContent = `${roundLabel} · 预测分析`;
   document.getElementById('modalHomeFlag').innerHTML = getEmblemSVG(home, 48);
   document.getElementById('modalAwayFlag').innerHTML = getEmblemSVG(away, 48);
   document.getElementById('modalHomeName').textContent = home;
